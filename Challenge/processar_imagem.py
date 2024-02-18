@@ -1,9 +1,8 @@
 import os
-import tesserocr # Uma biblioteca Python para acessar a funcionalidade OCR (Optical Character Recognition) do Tesseract.
+import pytesseract # Módulo para usar a funcionalidade OCR (Optical Character Recognition) do Tesseract
 from PIL import Image # Permite abrir, manipular e salvar imagens.
 from ler_nomes_txt import ler_nomes_txt
 from buscar_txt import encontrar_nomes_em_txt, encontrar_cpf
-
 
 def processar(arquivo):
     """
@@ -15,18 +14,10 @@ def processar(arquivo):
 
     print("Processando imagem:", os.path.basename(arquivo))
 
-    api = tesserocr.PyTessBaseAPI(lang='por', psm=tesserocr.PSM.AUTO) # Inicializa o Tesseract OCR
-    api.SetVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,") # Configura os caracteres permitidos para reconhecimento pelo Tesseract
-    api.SetImageFile(arquivo) # Define o arquivo de imagem a ser processado
+    texto_extraido = pytesseract.image_to_string(Image.open(arquivo), lang='por') # Extrai o texto da imagem
 
-    texto_extraido = api.GetUTF8Text() # Extrai o texto da imagem
-    api.End() # Finaliza a sessão do Tesseract OCR
-
-    with open('texto_extraido.txt', 'w') as arquivo_texto: 
+    with open('texto_extraido.txt', 'w') as arquivo_texto:
         arquivo_texto.write(texto_extraido) # Escreve o texto extraído em um arquivo de texto
-
-    #print("Texto extraído e salvo com sucesso no arquivo texto_extraido.txt!") 
-    #print(texto_extraido)
 
     caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
     nomes = ler_nomes_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
