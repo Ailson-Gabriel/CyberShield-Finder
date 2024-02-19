@@ -1,6 +1,5 @@
 import os
 from docx import Document
-from ler_nomes_txt import ler_nomes_txt
 from buscar import encontrar_nomes, encontrar_cpf
 
 def processar(arquivo):
@@ -13,11 +12,9 @@ def processar(arquivo):
 
     print("Processando docx:", os.path.basename(arquivo))
     
-    caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
-    nomes = ler_nomes_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     texto_docx = extrair_texto(arquivo)
 
-    encontrados_nomes = encontrar_nomes(texto_docx, nomes) # Encontrar nomes nos arquivos .docx
+    encontrados_nomes = encontrar_nomes(texto_docx) # Encontrar nomes nos arquivos .docx
     encontrados_cpf = encontrar_cpf(texto_docx) # Encontrar CPFs no arquivo .docx
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #

@@ -1,7 +1,6 @@
 import os
 import re
 from buscar import encontrar_nomes, encontrar_cpf
-from ler_nomes_txt import ler_nomes_txt
 
 def processar(arquivo):
     """
@@ -13,11 +12,9 @@ def processar(arquivo):
 
     print("Processando texto:", os.path.basename(arquivo))
 
-    caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
-    nomes = ler_nomes_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     texto_txt = extrair_texto(arquivo) 
 
-    encontrados_nomes = encontrar_nomes(texto_txt, nomes) # Encontra nomes no texto extraido do arquivo
+    encontrados_nomes = encontrar_nomes(texto_txt) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_txt) # Encontra CPFs no texto extraido do arquivo
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #

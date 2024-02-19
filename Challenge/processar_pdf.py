@@ -1,6 +1,5 @@
 import os
 from PyPDF2 import PdfReader
-from ler_nomes_txt import ler_nomes_txt
 from buscar import encontrar_nomes, encontrar_cpf
 
 def processar(arquivo):
@@ -14,11 +13,8 @@ def processar(arquivo):
 
     print("Processando PDF:", os.path.basename(arquivo))
 
-    caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
-    nomes = ler_nomes_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     texto_pdf = extrair_texto(arquivo) 
-
-    encontrados = encontrar_nomes(texto_pdf, nomes)
+    encontrados = encontrar_nomes(texto_pdf)
     encontrados_cpf = encontrar_cpf(texto_pdf)
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #

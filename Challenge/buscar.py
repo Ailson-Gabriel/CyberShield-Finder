@@ -1,17 +1,19 @@
 import re
+from ler_nomes_txt import ler_nomes_txt
 from valida_cpf import valida_cpf
 
-def encontrar_nomes(texto, nomes):
+def encontrar_nomes(texto):
     """
     Encontra nomes em um texto.
 
     Argumentos:
         texto (str): O texto no qual procurar nomes.
-        nomes (list): Lista de nomes para procurar no texto.
 
     Retorna:
         list: Lista de nomes encontrados.
     """
+    caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
+    nomes = ler_nomes_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     encontrados = []
     for nome in nomes:
         if re.search(r'\b' + re.escape(nome) + r'\b', texto, re.IGNORECASE):
