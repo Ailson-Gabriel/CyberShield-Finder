@@ -47,12 +47,3 @@ def valida_cpf(cpf):
         return False
 
     return True
-
-"""
-# EXEMPLO DE USO: *******************(NÃO NECESSÁRIO NO PROJETO FINAL)*******************
-cpf = input("Digite o CPF (apenas números): ")
-if valida_cpf(cpf):
-    print("CPF válido")
-else:
-    print("CPF inválido")
-"""
