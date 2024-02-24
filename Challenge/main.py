@@ -1,46 +1,65 @@
 import os
-from processar_imagem import processar as processar_imagem
-from processar_texto import processar as processar_texto
-from processar_docx import processar as processar_docx
-from processar_pdf import processar as processar_pdf
-from processar_excel import processar as processar_excel
+import xlrd
+import openpyxl
+from buscar import encontrar_nomes, encontrar_cpf
 
-def varrer_diretorio(diretorio):
-    for arquivo in os.listdir(diretorio):
+def processar(arquivo):
+    """
+    Processa um arquivo .xls ou .xlsx, procurando por nomes e CPFs.
 
-        if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg'):
-            print("-----------------------------------------------")
-            processar_imagem(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-        
-        elif arquivo.endswith('.txt'):
-            print("-----------------------------------------------")
-            processar_texto(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
+    Argumento:
+        arquivo (str): O caminho para o arquivo .xls ou .xlsx a ser processado.
+    """
 
-        elif arquivo.endswith('.docx'):
-            print("-----------------------------------------------")
-            processar_docx(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-
-        elif arquivo.endswith('.pdf'):
-            print("-----------------------------------------------")
-            processar_pdf(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-        
-        elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
-            print("-----------------------------------------------")
-            processar_excel(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-
-if __name__ == "__main__":
-    #diretorio = input(r"Por favor, insira o caminho do diretório: ")
-    diretorio = r"C:\Users\Gabriel\Desktop\FIAP - CyberSec\Primeiro_Ano\Nuclea\TESTES" #ALTERAR AQUI O CAMINHO DA PASTA DE TESTE DE VARREDURA
-    print("   ____      _               ____  _     _      _     _ ")
-    print("  / ___|   _| |__   ___ _ __/ ___|| |__ (_) ___| | __| |")
-    print(" | |  | | | | '_ \ / _ \ '__\___ \| '_ \| |/ _ \ |/ _` |")
-    print(" | |__| |_| | |_) |  __/ |   ___) | | | | |  __/ | (_| |")
-    print("  \____\__, |_.__/ \___|_|  |____/|_| |_|_|\___|_|\__,_|")
-    print("       |___/                                            ")
-    varrer_diretorio(diretorio)
+    print("Processando Excel:", os.path.basename(arquivo))
+    texto = extrair_texto(arquivo) # Extrai texto completo do arquivo Excel
+    texto_str = ' '.join(texto) # Transforma a lista de textos completos em uma única string
     
+    # Chama as funções 'encontrar_nomes' e 'encontrar_cpf' com os textos extraídos
+    encontrados_nomes = encontrar_nomes(texto_str)
+    encontrados_cpf = encontrar_cpf(texto_str)
+    
+    # -------------------------------------- Imprime os resultados -------------------------------------- #
+    if encontrados_nomes:
+        print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
+        print(encontrados_nomes,"\n")
+    else:
+        print(f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
+
+    if encontrados_cpf:
+        print(f"CPF encontrado no arquivo {os.path.basename(arquivo)}\n")
+    else:
+        print(f"Não encontrado CPFs no arquivo {os.path.basename(arquivo)}\n")
+    # -------------------------------------- Imprime os resultados -------------------------------------- #
+
+def extrair_texto(arquivo):
+    """
+    Extrai texto de um arquivo Excel (.xls ou .xlsx), ignorando células vazias.
+
+    Argumento:
+        arquivo (str): O caminho para o arquivo Excel a ser processado.
+
+    Retorna:
+        list: Lista de textos extraídos do arquivo Excel.
+    """
+    textos = []  # Inicializa a lista para armazenar os textos do arquivo Excel
+
+    if arquivo.endswith('.xls'):  # Para arquivos .xls
+        workbook = xlrd.open_workbook(arquivo)  # Abre o arquivo Excel usando a biblioteca xlrd
+        for sheet in workbook.sheets():  # Repete para as planilhas no arquivo Excel
+            for row_idx in range(1, sheet.nrows):  # Repete para as linhas na planilha (excluindo a linha do cabeçalho)
+                for col_idx in range(sheet.ncols):  # Repete para as colunas na planilha
+                    cell_value = sheet.cell_value(row_idx, col_idx)  # Obtém o valor da célula
+                    if cell_value is not None and cell_value != '':  # Verifica se a célula não está vazia
+                        textos.append(str(cell_value))  # Adiciona o texto à lista
+        return textos
+
+    elif arquivo.endswith('.xlsx'):  # Para arquivos .xlsx
+        workbook = openpyxl.load_workbook(arquivo)  # Abre o arquivo Excel usando a biblioteca openpyxl
+        for sheet_name in workbook.sheetnames:  # Repete para os nomes das planilhas no arquivo Excel
+            worksheet = workbook[sheet_name]  # Obtém a planilha atual
+            for row in worksheet.iter_rows(values_only=True):  # Repete para as linhas na planilha
+                for cell_value in row:  # Repete para os valores das células na linha
+                    if cell_value is not None and cell_value != '':  # Verifica se a célula não está vazia
+                        textos.append(str(cell_value))  # Adiciona o texto à lista
+        return textos
