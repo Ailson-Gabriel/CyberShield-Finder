@@ -10,13 +10,10 @@ def processar(arquivo):
     Argumento:
         arquivo (str): O caminho para o arquivo .xls ou .xlsx a ser processado.
     """
-
-    print("Processando Excel:", os.path.basename(arquivo))
     
-    # Extrai texto completo do arquivo Excel
-    texto = extrair_texto(arquivo)
-    # Transforma a lista de textos completos em uma única string
-    texto_str = ' '.join(texto)
+    print("Processando Excel:", os.path.basename(arquivo))
+    texto = extrair_texto(arquivo) # Extrai texto completo do arquivo Excel
+    texto_str = ' '.join(texto) # Transforma a lista de textos completos em uma única string
     
     # Chama as funções 'encontrar_nomes' e 'encontrar_cpf' com os textos extraídos
     encontrados_nomes = encontrar_nomes(texto_str)
