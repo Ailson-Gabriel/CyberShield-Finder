@@ -3,28 +3,33 @@ from processar_imagem import processar as processar_imagem
 from processar_texto import processar as processar_texto
 from processar_docx import processar as processar_docx
 from processar_pdf import processar as processar_pdf
+from processar_excel import processar as processar_excel
 
 def varrer_diretorio(diretorio):
     for arquivo in os.listdir(diretorio):
-        caminho_arquivo = os.path.join(diretorio, arquivo)
         if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg'):
             print("-----------------------------------------------")
-            processar_imagem(caminho_arquivo)
+            processar_imagem(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
 
         elif arquivo.endswith('.txt'):
             print("-----------------------------------------------")
-            processar_texto(caminho_arquivo)
+            processar_texto(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
 
         elif arquivo.endswith('.docx'):
             print("-----------------------------------------------")
-            processar_docx(caminho_arquivo)
+            processar_docx(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
 
         elif arquivo.endswith('.pdf'):
             print("-----------------------------------------------")
-            processar_pdf(caminho_arquivo)
+            processar_pdf(os.path.join(diretorio, arquivo))
+            print("\n_______________________________________________")
+        
+        elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
+            print("-----------------------------------------------")
+            processar_excel(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
 
 if __name__ == "__main__":
