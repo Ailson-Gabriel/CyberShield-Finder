@@ -13,7 +13,6 @@ def varrer_diretorio(diretorio):
             processar_imagem(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
         
-        
         elif arquivo.endswith('.txt'):
             print("-----------------------------------------------")
             processar_texto(os.path.join(diretorio, arquivo))
