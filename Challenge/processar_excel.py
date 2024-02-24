@@ -51,14 +51,14 @@ def extrair_texto(arquivo):
 
     if arquivo.endswith('.xls'):  # Para arquivos .xls
         workbook = xlrd.open_workbook(arquivo)  # Abre o arquivo Excel usando a biblioteca xlrd
-        for sheet in workbook.sheets():  # Itera sobre as planilhas no arquivo Excel
-            for col_idx in range(sheet.ncols):  # Itera sobre as colunas na planilha
+        for sheet in workbook.sheets():  # Repete para as planilhas no arquivo Excel
+            for col_idx in range(sheet.ncols):  # Repete para as colunas na planilha
                 col_name = str(sheet.cell_value(0, col_idx)).lower()  # Obtém o nome da coluna e converte para minúsculas
                 if 'nome' in col_name:  # Verifica se a coluna 'nome' está presente no nome da coluna
-                    for row_idx in range(1, sheet.nrows):  # Itera sobre as linhas na coluna
+                    for row_idx in range(1, sheet.nrows):  # Repete para as linhas na coluna
                         texto_nomes += str(sheet.cell_value(row_idx, col_idx)) + "\n"  # Adiciona o texto à variável
                 elif 'cpf' in col_name:  # Verifica se a coluna 'cpf' está presente no nome da coluna
-                    for row_idx in range(1, sheet.nrows):  # Itera sobre as linhas na coluna
+                    for row_idx in range(1, sheet.nrows):  # Repete para as linhas na coluna
                         texto_cpf += str(sheet.cell_value(row_idx, col_idx)) + "\n"  # Adiciona o texto à variável
                 else:  # Se nenhuma das colunas for encontrada, extrai todo o texto do arquivo Excel
                     for row_idx in range(sheet.nrows):
@@ -69,10 +69,10 @@ def extrair_texto(arquivo):
 
     elif arquivo.endswith('.xlsx'):  # Para arquivos .xlsx
         workbook = openpyxl.load_workbook(arquivo)  # Abre o arquivo Excel usando a biblioteca openpyxl
-        for sheet_name in workbook.sheetnames:  # Itera sobre os nomes das planilhas no arquivo Excel
+        for sheet_name in workbook.sheetnames:  # Repete para os nomes das planilhas no arquivo Excel
             worksheet = workbook[sheet_name]  # Obtém a planilha atual
-            for col in worksheet.iter_cols(max_row=1, values_only=True):  # Itera sobre as colunas na primeira linha
-                for cell in col:  # Itera sobre as células na coluna
+            for col in worksheet.iter_cols(max_row=1, values_only=True):  # Repete para as colunas na primeira linha
+                for cell in col:  # Repete para as células na coluna
                     col_name = str(cell).lower()  # Obtém o nome da coluna e converte para minúsculas
                     if 'nome' in col_name:  # Verifica se a coluna 'nome' está presente no nome da coluna
                         for row_idx, row in enumerate(worksheet.iter_rows(min_row=2, min_col=cell.column, max_col=cell.column, values_only=True), start=2):
