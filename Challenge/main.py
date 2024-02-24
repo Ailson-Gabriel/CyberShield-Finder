@@ -7,11 +7,13 @@ from processar_excel import processar as processar_excel
 
 def varrer_diretorio(diretorio):
     for arquivo in os.listdir(diretorio):
+
         if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg'):
             print("-----------------------------------------------")
             processar_imagem(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
-
+        
+        
         elif arquivo.endswith('.txt'):
             print("-----------------------------------------------")
             processar_texto(os.path.join(diretorio, arquivo))

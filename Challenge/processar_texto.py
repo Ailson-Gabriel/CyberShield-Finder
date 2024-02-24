@@ -1,5 +1,4 @@
 import os
-import re
 from buscar import encontrar_nomes, encontrar_cpf
 
 def processar(arquivo):
@@ -19,9 +18,8 @@ def processar(arquivo):
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
-        print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}:\n")
-        print(encontrados_nomes)
-        print("\n")
+        print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
+        print(encontrados_nomes,"\n")
     else:
         print(f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
 

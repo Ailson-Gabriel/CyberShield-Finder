@@ -12,12 +12,15 @@ def encontrar_nomes(texto):
     Retorna:
         list: Lista de nomes encontrados.
     """
+    print("\nBUSCANDO NOMES")
     caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
     nomes = ler_nomes_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     encontrados = []
     for nome in nomes:
         if re.search(r'\b' + re.escape(nome) + r'\b', texto, re.IGNORECASE):
-            encontrados.append(nome)
+            if nome not in encontrados:    
+                encontrados.append(nome)
+                #print(f"Nome encontrado: {nome}")
     return encontrados
 
 def encontrar_cpf(texto):
@@ -29,6 +32,7 @@ def encontrar_cpf(texto):
     Retorna:
         list: Lista de CPFs encontrados.
     """
+    print("\nBUSCANDO POSSÍVEIS CPFs")
     cpfs_validos = []
 
     cpfs_potenciais = re.findall(r'\b(?:\d{3}\.){2}\d{3}-\d{2}|\b\d{11}\b', texto)
@@ -37,6 +41,7 @@ def encontrar_cpf(texto):
     # Valida cada CPF potencial
     for cpf in cpfs_potenciais:
         if valida_cpf(cpf):  # Chama a função valida_cpf para validar o CPF
-            cpfs_validos.append(cpf)  # Adiciona o CPF válido à lista de CPFs válidos
-            print(f"CPF válido encontrado: {cpf}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
+            if cpf not in cpfs_validos:
+                cpfs_validos.append(cpf)  # Adiciona o CPF válido à lista de CPFs válidos
+                print(f"CPF válido encontrado: {cpf}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
     return cpfs_validos

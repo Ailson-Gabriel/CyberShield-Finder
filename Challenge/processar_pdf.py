@@ -14,14 +14,13 @@ def processar(arquivo):
     print("Processando PDF:", os.path.basename(arquivo))
 
     texto_pdf = extrair_texto(arquivo) 
-    encontrados = encontrar_nomes(texto_pdf)
+    encontrados_nomes = encontrar_nomes(texto_pdf)
     encontrados_cpf = encontrar_cpf(texto_pdf)
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
-    if encontrados:
+    if encontrados_nomes:
         print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
-        print(encontrados)
-        print("\n")
+        print(encontrados_nomes,"\n")
     else:
         print(f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
 
