@@ -14,10 +14,9 @@ def processar(arquivo):
     print("Processando PDF:", os.path.basename(arquivo))
 
     texto_pdf = extrair_texto(arquivo) 
-    encontrados_nomes = encontrar_nomes(texto_pdf)
-    encontrados_cpf = encontrar_cpf(texto_pdf)
-    encontrados_cnpj = encontrar_cnpj(texto_pdf)
-
+    encontrados_nomes = encontrar_nomes(texto_pdf) # Encontra nomes no texto extraido do arquivo
+    encontrados_cpf = encontrar_cpf(texto_pdf) # Encontra CPFs no texto extraido do arquivo
+    encontrados_cnpj = encontrar_cnpj(texto_pdf) # Encontra CNPJs no texto extraido do arquivo
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:

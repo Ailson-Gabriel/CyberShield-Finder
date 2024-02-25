@@ -15,10 +15,9 @@ def processar(arquivo):
     texto = extrair_texto(arquivo) # Extrai texto completo do arquivo Excel
     texto_str = ' '.join(texto) # Transforma a lista de textos completos em uma única string
     
-    # Chama as funções 'encontrar_nomes' e 'encontrar_cpf' com os textos extraídos
-    encontrados_nomes = encontrar_nomes(texto_str)
-    encontrados_cpf = encontrar_cpf(texto_str)
-    encontrados_cnpj = encontrar_cnpj(texto_str)
+    encontrados_nomes = encontrar_nomes(texto_str) # Encontra nomes no texto extraido do arquivo
+    encontrados_cpf = encontrar_cpf(texto_str) # Encontra CPFs no texto extraido do arquivo
+    encontrados_cnpj = encontrar_cnpj(texto_str) # Encontra CNPJs no texto extraido do arquivo
     
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:

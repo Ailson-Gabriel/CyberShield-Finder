@@ -16,7 +16,7 @@ def processar(arquivo):
 
     encontrados_nomes = encontrar_nomes(texto_docx) # Encontrar nomes nos arquivos .docx
     encontrados_cpf = encontrar_cpf(texto_docx) # Encontrar CPFs no arquivo .docx
-    encontrados_cnpj = encontrar_cnpj(texto_docx)
+    encontrados_cnpj = encontrar_cnpj(texto_docx) # Encontra CNPJs no texto extraido do arquivo .docx
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:

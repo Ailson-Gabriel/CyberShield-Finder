@@ -17,7 +17,7 @@ def processar(arquivo):
 
     encontrados_nomes = encontrar_nomes(texto_extraido) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_extraido) # Encontra CPFs no texto extraido do arquivo
-    encontrados_cnpj = encontrar_cnpj(texto_extraido)
+    encontrados_cnpj = encontrar_cnpj(texto_extraido) # Encontra CNPJs no texto extraido do arquivo
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
