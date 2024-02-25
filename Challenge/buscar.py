@@ -54,13 +54,13 @@ def encontrar_cnpj(texto):
         texto (str): O texto no qual procurar CNPJs.
 
     Retorna:
-        list: Lista de CNPJs encontrados.
+        list: Lista de CNPJs encontrados..
     """
     print("\nBUSCANDO POSSÍVEIS CNPJs")
     cnpjs_validos = []
 
     # Encontra todos os conjuntos de 14 números ou CNPJs formatados corretamente usando expressão regular
-    cnpjs_potenciais = re.findall(r'\b(?:\d{2}\.){2}\d{3}/\d{4}-\d{2}|\b\d{14}\b', texto)
+    cnpjs_potenciais = re.findall(r'(?<!\d)(?:\d{1,2}\.)?\d{3}\.\d{3}/\d{4}-\d{2}(?!\d)|\b\d{14}\b', texto)
 
     # Valida cada CNPJ potencial
     for cnpj in cnpjs_potenciais:
