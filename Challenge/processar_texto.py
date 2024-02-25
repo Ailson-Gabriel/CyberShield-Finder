@@ -1,5 +1,5 @@
 import os
-from buscar import encontrar_nomes, encontrar_cpf
+from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
 
 def processar(arquivo):
     """
@@ -15,6 +15,7 @@ def processar(arquivo):
 
     encontrados_nomes = encontrar_nomes(texto_txt) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_txt) # Encontra CPFs no texto extraido do arquivo
+    encontrados_cnpj = encontrar_cnpj(texto_txt)
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
@@ -27,6 +28,11 @@ def processar(arquivo):
         print(f"CPF encontrado no arquivo {os.path.basename(arquivo)}\n")
     else:
         print(f"Não encontrado CPFs no arquivo {os.path.basename(arquivo)}\n")
+
+    if encontrados_cnpj:
+        print(f"CNPJ encontrado no arquivo {os.path.basename(arquivo)}\n")
+    else:
+        print(f"Não encontrado CNPJs no arquivo {os.path.basename(arquivo)}\n")
     # -------------------------------------- Imprime os resultados -------------------------------------- #
 
 

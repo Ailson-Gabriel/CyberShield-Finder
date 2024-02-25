@@ -11,10 +11,6 @@ def valida_cpf(cpf):
     # Remove caracteres não numéricos do CPF
     cpf = ''.join(filter(str.isdigit, cpf))
 
-    # Verifica se o CPF tem 11 dígitos
-    if len(cpf) != 11:
-        return False
-
     # Calculando o primeiro dígito verificador
     soma = 0
     peso = 10
