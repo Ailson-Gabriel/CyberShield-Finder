@@ -17,7 +17,7 @@ def varrer_diretorio(diretorio):
             print("-----------------------------------------------")
             processar_texto(os.path.join(diretorio, arquivo))
             print("\n_______________________________________________")
-
+  
         elif arquivo.endswith('.docx'):
             print("-----------------------------------------------")
             processar_docx(os.path.join(diretorio, arquivo))

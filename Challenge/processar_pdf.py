@@ -1,6 +1,7 @@
 import os
 from PyPDF2 import PdfReader
 from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
+from criptografar_arquivo import criptografar_arquivo_caminho
 
 def processar(arquivo):
     """
@@ -17,6 +18,9 @@ def processar(arquivo):
     encontrados_nomes = encontrar_nomes(texto_pdf) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_pdf) # Encontra CPFs no texto extraido do arquivo
     encontrados_cnpj = encontrar_cnpj(texto_pdf) # Encontra CNPJs no texto extraido do arquivo
+
+    if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
+        criptografar_arquivo_caminho(arquivo)
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:

@@ -2,6 +2,7 @@ import os
 import pytesseract # Módulo para usar a funcionalidade OCR (Optical Character Recognition) do Tesseract
 from PIL import Image # Permite abrir, manipular e salvar imagens.
 from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
+from criptografar_arquivo import criptografar_arquivo_caminho
 
 def processar(arquivo):
     """
@@ -18,6 +19,9 @@ def processar(arquivo):
     encontrados_nomes = encontrar_nomes(texto_extraido) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_extraido) # Encontra CPFs no texto extraido do arquivo
     encontrados_cnpj = encontrar_cnpj(texto_extraido) # Encontra CNPJs no texto extraido do arquivo
+
+    if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
+        criptografar_arquivo_caminho(arquivo)
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:

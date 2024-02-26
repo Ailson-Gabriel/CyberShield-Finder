@@ -1,6 +1,7 @@
 import os
 from docx import Document
 from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
+from criptografar_arquivo import criptografar_arquivo_caminho
 
 def processar(arquivo):
     """
@@ -17,6 +18,9 @@ def processar(arquivo):
     encontrados_nomes = encontrar_nomes(texto_docx) # Encontrar nomes nos arquivos .docx
     encontrados_cpf = encontrar_cpf(texto_docx) # Encontrar CPFs no arquivo .docx
     encontrados_cnpj = encontrar_cnpj(texto_docx) # Encontra CNPJs no texto extraido do arquivo .docx
+
+    if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
+        criptografar_arquivo_caminho(arquivo)
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
