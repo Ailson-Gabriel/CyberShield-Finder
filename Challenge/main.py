@@ -7,10 +7,10 @@ from processar_excel import processar as processar_excel
 
 def varrer_diretorio(diretorio):
     for arquivo in os.listdir(diretorio):
-        
-        if os.path.isdir(caminho_arquivo):  # Se for um diretório
-            print(f"Entrando no diretório: {caminho_arquivo}")
-            varrer_diretorio(caminho_arquivo)  # Chama a função de varredura novamente para o subdiretório
+
+        if os.path.isdir(os.path.join(diretorio, arquivo)):  # Se for um diretório
+            print(f"Entrando no diretório: {arquivo}")
+            varrer_diretorio(os.path.join(diretorio, arquivo))  # Chama a função de varredura novamente para o subdiretório
         else:
             if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg') or arquivo.endswith('.png'):
                 print("-----------------------------------------------")
