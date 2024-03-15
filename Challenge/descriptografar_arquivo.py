@@ -21,17 +21,21 @@ def descriptografar_arquivo(caminho_arquivo_chave, nome_arquivo_criptografado, n
 # Função para descriptografar arquivos em um diretório especificado
 def descriptografar_arquivos_em_diretorio(diretorio):
     for arquivo in os.listdir(diretorio): # Repete para os arquivos no diretório
-        if arquivo.endswith('.criptografado'): # Verifica se o arquivo tem a extensão ".criptografado"
-            caminho_arquivo_criptografado = os.path.join(diretorio, arquivo) # Obtém o caminho completo do arquivo criptografado
-            caminho_arquivo_original = caminho_arquivo_criptografado[:-len('.criptografado')] # Remove a extensão ".criptografado" para obter o caminho do arquivo original
-            caminho_arquivo_chave = caminho_arquivo_original + '_chave' # Obtém o caminho do arquivo da chave correspondente
-            
-            # Descriptografa o arquivo criptografado e salva o arquivo descriptografado
-            descriptografar_arquivo(caminho_arquivo_chave, caminho_arquivo_criptografado, caminho_arquivo_original) 
-            
-            # Remove os arquivos criptografado e de chave após a descriptografia
-            os.remove(caminho_arquivo_criptografado)
-            os.remove(caminho_arquivo_chave)
+        if os.path.isdir(caminho_arquivo):  # Se for um diretório
+            print(f"Entrando no diretório: {caminho_arquivo}")
+            varrer_diretorio(caminho_arquivo)  # Chama a função de varredura novamente para o subdiretório
+        else:
+            if arquivo.endswith('.criptografado'): # Verifica se o arquivo tem a extensão ".criptografado"
+                caminho_arquivo_criptografado = os.path.join(diretorio, arquivo) # Obtém o caminho completo do arquivo criptografado
+                caminho_arquivo_original = caminho_arquivo_criptografado[:-len('.criptografado')] # Remove a extensão ".criptografado" para obter o caminho do arquivo original
+                caminho_arquivo_chave = caminho_arquivo_original + '_chave' # Obtém o caminho do arquivo da chave correspondente
+                
+                # Descriptografa o arquivo criptografado e salva o arquivo descriptografado
+                descriptografar_arquivo(caminho_arquivo_chave, caminho_arquivo_criptografado, caminho_arquivo_original) 
+                
+                # Remove os arquivos criptografado e de chave após a descriptografia
+                os.remove(caminho_arquivo_criptografado)
+                os.remove(caminho_arquivo_chave)
 
 # Diretório onde os arquivos criptografados estão localizados
 diretorio = r'C:\Users\Gabriel\Desktop\FIAP - CyberSec\Primeiro_Ano\Nuclea\TESTES' #ALTERAR AQUI O CAMINHO DA PASTA DE TESTE DE VARREDURA
