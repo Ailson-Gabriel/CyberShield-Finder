@@ -7,31 +7,35 @@ from processar_excel import processar as processar_excel
 
 def varrer_diretorio(diretorio):
     for arquivo in os.listdir(diretorio):
-
-        if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg'):
-            print("-----------------------------------------------")
-            processar_imagem(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
         
-        elif arquivo.endswith('.txt'):
-            print("-----------------------------------------------")
-            processar_texto(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-  
-        elif arquivo.endswith('.docx'):
-            print("-----------------------------------------------")
-            processar_docx(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-
-        elif arquivo.endswith('.pdf'):
-            print("-----------------------------------------------")
-            processar_pdf(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
-        
-        elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
-            print("-----------------------------------------------")
-            processar_excel(os.path.join(diretorio, arquivo))
-            print("\n_______________________________________________")
+        if os.path.isdir(caminho_arquivo):  # Se for um diretório
+            print(f"Entrando no diretório: {caminho_arquivo}")
+            varrer_diretorio(caminho_arquivo)  # Chama a função de varredura novamente para o subdiretório
+        else:
+            if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg') or arquivo.endswith('.png'):
+                print("-----------------------------------------------")
+                processar_imagem(os.path.join(diretorio, arquivo))
+                print("\n_______________________________________________")
+            
+            elif arquivo.endswith('.txt'):
+                print("-----------------------------------------------")
+                processar_texto(os.path.join(diretorio, arquivo))
+                print("\n_______________________________________________")
+      
+            elif arquivo.endswith('.docx'):
+                print("-----------------------------------------------")
+                processar_docx(os.path.join(diretorio, arquivo))
+                print("\n_______________________________________________")
+    
+            elif arquivo.endswith('.pdf'):
+                print("-----------------------------------------------")
+                processar_pdf(os.path.join(diretorio, arquivo))
+                print("\n_______________________________________________")
+            
+            elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
+                print("-----------------------------------------------")
+                processar_excel(os.path.join(diretorio, arquivo))
+                print("\n_______________________________________________")
 
 if __name__ == "__main__":
     #diretorio = input(r"Por favor, insira o caminho do diretório: ")
