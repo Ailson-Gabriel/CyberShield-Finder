@@ -9,8 +9,8 @@ def varrer_diretorio(diretorio):
     for arquivo in os.listdir(diretorio):
 
         if os.path.isdir(os.path.join(diretorio, arquivo)):  # Se for um diretório
-            print("-----------------------------------------------")
-            print("-----------------------------------------------")
+            print("\n_______________________________________________")
+            print("\n_______________________________________________")
             print(f"Entrando no diretório: {arquivo}")
             varrer_diretorio(os.path.join(diretorio, arquivo))  # Chama a função de varredura novamente para o subdiretório
         else:
