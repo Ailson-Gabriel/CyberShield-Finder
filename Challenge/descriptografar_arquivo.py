@@ -21,9 +21,10 @@ def descriptografar_arquivo(caminho_arquivo_chave, nome_arquivo_criptografado, n
 # Função para descriptografar arquivos em um diretório especificado
 def descriptografar_arquivos_em_diretorio(diretorio):
     for arquivo in os.listdir(diretorio): # Repete para os arquivos no diretório
-        if os.path.isdir(caminho_arquivo):  # Se for um diretório
-            print(f"Entrando no diretório: {caminho_arquivo}")
-            varrer_diretorio(caminho_arquivo)  # Chama a função de varredura novamente para o subdiretório
+
+        if os.path.isdir(os.path.join(diretorio, arquivo)):  # Se for um diretório
+            print(f"Entrando no diretório: {arquivo}")
+            descriptografar_arquivos_em_diretorio(os.path.join(diretorio, arquivo))  # Chama a função de varredura novamente para o subdiretório
         else:
             if arquivo.endswith('.criptografado'): # Verifica se o arquivo tem a extensão ".criptografado"
                 caminho_arquivo_criptografado = os.path.join(diretorio, arquivo) # Obtém o caminho completo do arquivo criptografado
