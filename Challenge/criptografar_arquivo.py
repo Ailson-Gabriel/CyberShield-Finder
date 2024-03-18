@@ -52,4 +52,4 @@ def criptografar_arquivo_caminho(caminho_arquivo):
     os.remove(caminho_arquivo)
 
     # Imprime uma mensagem indicando que o arquivo foi criptografado com sucesso e salvo
-    print(f"Arquivo {os.path.basename(caminho_arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(nome_arquivo_criptografado)}.")
+    print(f"\nArquivo {os.path.basename(caminho_arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(nome_arquivo_criptografado)}.\n")

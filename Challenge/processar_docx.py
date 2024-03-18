@@ -19,13 +19,9 @@ def processar(arquivo):
     encontrados_cpf = encontrar_cpf(texto_docx) # Encontrar CPFs no arquivo .docx
     encontrados_cnpj = encontrar_cnpj(texto_docx) # Encontra CNPJs no texto extraido do arquivo .docx
 
-    if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
-        criptografar_arquivo_caminho(arquivo)
-
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
         print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
-        print(encontrados_nomes,"\n")
     else:
         print(f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
 
@@ -39,6 +35,9 @@ def processar(arquivo):
     else:
         print(f"Não encontrado CNPJs no arquivo {os.path.basename(arquivo)}\n")
     # -------------------------------------- Imprime os resultados -------------------------------------- #
+        
+    if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
+        criptografar_arquivo_caminho(arquivo)
         
 def extrair_texto(arquivo):
     """

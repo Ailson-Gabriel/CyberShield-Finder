@@ -26,7 +26,6 @@ def descriptografar_arquivos_em_diretorio(diretorio):
     for arquivo in os.listdir(diretorio): # Repete para os arquivos no diretório
 
         if os.path.isdir(os.path.join(diretorio, arquivo)):  # Se for um diretório
-            print(f"Entrando no diretório: {arquivo}")
             descriptografar_arquivos_em_diretorio(os.path.join(diretorio, arquivo))  # Chama a função de varredura novamente para o subdiretório
         else:
             if arquivo.endswith('.criptografado'): # Verifica se o arquivo tem a extensão ".criptografado"
@@ -79,13 +78,6 @@ def comecar_procura():
         label2 = customtkinter.CTkLabel(janela, text='Por favor, selecione a pasta Primeiro')
         label2.pack(pady=22)
 
-
-#Criar TEXTO para encaixar os resultados
-#texto_resultados = Text(janela, height=20, width=60) #tamanho do resultado no text
-#texto_resultados.pack(pady=20) #tamanho do text na janela
-#texto_resultados.insert(tk.END, output_text)
-
-
 #Botao Selecione a pasta
 selecione_pasta = customtkinter.CTkButton(janela, text='Selecione a Pasta', command=abrir_caminho_pasta)
 selecione_pasta.pack(pady=20)  # configura o botao
@@ -96,8 +88,8 @@ iniciar_botao = customtkinter.CTkButton(janela, text='Descriptografar', command=
 iniciar_botao.pack(pady=20)  # espacos entre o botao
 
 
-label = None           #Declarar vazio para nao spamar a mensagem
-label2 = None          #Declarar vazio para nao spamar a mensage
-label3 = None          #Declarar vazio para nao spamar a mensage
+label = None           #Declara vazio para nao spamar a mensagem
+label2 = None          #Declara vazio para nao spamar a mensagem
+label3 = None          #Declara vazio para nao spamar a mensagem
 
 janela.mainloop()  # mantém a janela sem fechar

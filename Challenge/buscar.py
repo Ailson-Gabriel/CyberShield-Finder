@@ -33,7 +33,7 @@ def encontrar_cpf(texto):
     Retorna:
         list: Lista de CPFs encontrados.
     """
-    print("\nBUSCANDO POSSÍVEIS CPFs")
+    print("BUSCANDO POSSÍVEIS CPFs")
     cpfs_validos = []
 
     cpfs_potenciais = re.findall(r'\b(?:\d{3}\.){2}\d{3}-\d{2}|\b\d{11}\b', texto)
@@ -44,7 +44,7 @@ def encontrar_cpf(texto):
         if valida_cpf(cpf):  # Chama a função valida_cpf para validar o CPF
             if cpf not in cpfs_validos:
                 cpfs_validos.append(cpf)  # Adiciona o CPF válido à lista de CPFs válidos
-                print(f"CPF válido encontrado: {cpf}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
+                #print(f"CPF válido encontrado: {cpf}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
     return cpfs_validos
 
 def encontrar_cnpj(texto):
@@ -54,9 +54,9 @@ def encontrar_cnpj(texto):
         texto (str): O texto no qual procurar CNPJs.
 
     Retorna:
-        list: Lista de CNPJs encontrados..
+        list: Lista de CNPJs encontrados.
     """
-    print("\nBUSCANDO POSSÍVEIS CNPJs")
+    print("BUSCANDO POSSÍVEIS CNPJs\n")
     cnpjs_validos = []
 
     # Encontra todos os conjuntos de 14 números ou CNPJs formatados corretamente usando expressão regular
@@ -67,5 +67,5 @@ def encontrar_cnpj(texto):
         if valida_cnpj(cnpj):  # Chama a função valida_cnpj para validar o CNPJ
             if cnpj not in cnpjs_validos:
                 cnpjs_validos.append(cnpj)  # Adiciona o CNPJ válido à lista de CNPJs válidos
-                print(f"CNPJ válido encontrado: {cnpj}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
+                #print(f"CNPJ válido encontrado: {cnpj}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
     return cnpjs_validos

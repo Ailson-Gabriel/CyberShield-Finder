@@ -12,32 +12,29 @@ def varrer_diretorio(diretorio):
 
     for arquivo in os.listdir(diretorio):
         if os.path.isdir(os.path.join(diretorio, arquivo)):  # Se for um diretório
+            print("----------------------------------------------------------------------------------------------------------")
+            print(f"\nACESSANDO SUBDIRETÓRIO {os.path.join(diretorio, arquivo)}\n")
             varrer_diretorio(os.path.join(diretorio, arquivo))
 
         elif arquivo.endswith('.jpg') or arquivo.endswith('.jpeg') or arquivo.endswith('.png'):
-            print("-----------------------------------------------")
+            print("----------------------------------------------------------------------------------------------------------")
             processar_imagem(os.path.join(diretorio, arquivo))
-            print("\n_")
 
         elif arquivo.endswith('.txt'):
-            print("-----------------------------------------------")
+            print("----------------------------------------------------------------------------------------------------------")
             processar_texto(os.path.join(diretorio, arquivo))
-            print("\n_")
 
         elif arquivo.endswith('.docx'):
-            print("-----------------------------------------------")
+            print("----------------------------------------------------------------------------------------------------------")
             processar_docx(os.path.join(diretorio, arquivo))
-            print("\n_")
 
         elif arquivo.endswith('.pdf'):
-            print("-----------------------------------------------")
+            print("----------------------------------------------------------------------------------------------------------")
             processar_pdf(os.path.join(diretorio, arquivo))
-            print("\n_")
 
         elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
-            print("-----------------------------------------------")
+            print("----------------------------------------------------------------------------------------------------------")
             processar_excel(os.path.join(diretorio, arquivo))
-            print("\n_")
 
 
 if __name__ == "__main__":
