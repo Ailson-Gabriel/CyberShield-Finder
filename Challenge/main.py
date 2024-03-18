@@ -44,7 +44,7 @@ if __name__ == "__main__":
     #diretorio = input(r"Por favor, insira o caminho do diretório: ")
     janela = customtkinter.CTk()  # janela principal
     janela.title('CyberShield Finder')  # Nome do titulo 'Ferramenta'
-    janela.geometry('600x600')  # tamanho da janela
+    janela.geometry('500x280')  # tamanho da janela
     caminho_pasta = None
 
 def abrir_caminho_pasta():
