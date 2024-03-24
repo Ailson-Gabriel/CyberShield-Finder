@@ -2,6 +2,7 @@ import os
 from PyPDF2 import PdfReader
 from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
 from criptografar_arquivo import criptografar_arquivo_caminho
+from colorama import Fore
 
 def processar(arquivo):
     """
@@ -12,7 +13,7 @@ def processar(arquivo):
         nomes (list): Lista de nomes para procurar no PDF.
     """
 
-    print("Processando PDF:", os.path.basename(arquivo))
+    print(Fore.LIGHTWHITE_EX + "Processando PDF:", os.path.basename(arquivo))
 
     texto_pdf = extrair_texto(arquivo) 
     encontrados_nomes = encontrar_nomes(texto_pdf) # Encontra nomes no texto extraido do arquivo
@@ -21,23 +22,32 @@ def processar(arquivo):
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
-        print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RED +  f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     else:
-        print(f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.BLUE + f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
 
     if encontrados_cpf:
-        print(f"CPF encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RED + f"CPF encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     else:
-        print(f"Não encontrado CPFs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.BLUE + f"Não encontrado CPFs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
 
     if encontrados_cnpj:
-        print(f"CNPJ encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RED + f"CNPJ encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     else:
-        print(f"Não encontrado CNPJs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.BLUE + f"Não encontrado CNPJs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     # -------------------------------------- Imprime os resultados -------------------------------------- #
         
     if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
         criptografar_arquivo_caminho(arquivo)
+    else:
+        print(Fore.CYAN + f"Não encontrado dados sensíveis no arquivo {os.path.basename(arquivo)}")
+        print(Fore.RESET)
 
 
 def extrair_texto(arquivo):

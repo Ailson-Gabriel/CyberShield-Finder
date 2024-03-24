@@ -2,7 +2,7 @@ import os
 from docx import Document
 from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
 from criptografar_arquivo import criptografar_arquivo_caminho
-
+from colorama import Fore
 def processar(arquivo):
     """
     Processa um arquivo .docx, procurando por nomes e CPFs.
@@ -11,7 +11,8 @@ def processar(arquivo):
         arquivo (str): O caminho para o arquivo .docx a ser processado.
     """
 
-    print("Processando docx:", os.path.basename(arquivo))
+    print(Fore.LIGHTWHITE_EX + "Processando docx:", os.path.basename(arquivo))
+    print(Fore.RESET)
     
     texto_docx = extrair_texto(arquivo)
 
@@ -19,25 +20,36 @@ def processar(arquivo):
     encontrados_cpf = encontrar_cpf(texto_docx) # Encontrar CPFs no arquivo .docx
     encontrados_cnpj = encontrar_cnpj(texto_docx) # Encontra CNPJs no texto extraido do arquivo .docx
 
+    
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
-        print(f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RED +  f"Nomes encontrados no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     else:
-        print(f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.BLUE + f"Não foram encontrados nomes no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
 
     if encontrados_cpf:
-        print(f"CPF encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RED + f"CPF encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     else:
-        print(f"Não encontrado CPFs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.BLUE + f"Não encontrado CPFs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
 
     if encontrados_cnpj:
-        print(f"CNPJ encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RED + f"CNPJ encontrado no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     else:
-        print(f"Não encontrado CNPJs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.BLUE + f"Não encontrado CNPJs no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     # -------------------------------------- Imprime os resultados -------------------------------------- #
+    
         
     if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
         criptografar_arquivo_caminho(arquivo)
+    else:
+        print(Fore.CYAN + f"Não encontrado dados sensíveis no arquivo {os.path.basename(arquivo)}")
+        print(Fore.RESET)
         
 def extrair_texto(arquivo):
     """
