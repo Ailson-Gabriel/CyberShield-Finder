@@ -2,7 +2,7 @@ import os
 import pytesseract # Módulo para usar a funcionalidade OCR (Optical Character Recognition) do Tesseract
 from PIL import Image # Permite abrir, manipular e salvar imagens.
 import cv2
-from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj
+from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj, encontrar_etnias
 from criptografar_arquivo import criptografar_arquivo_caminho
 from colorama import Fore
 
@@ -22,6 +22,7 @@ def processar(arquivo):
     encontrados_nomes = encontrar_nomes(texto_extraido) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_extraido) # Encontra CPFs no texto extraido do arquivo
     encontrados_cnpj = encontrar_cnpj(texto_extraido) # Encontra CNPJs no texto extraido do arquivo
+    encontrados_etnias = encontrar_etnias(texto_extraido) # Encontra Etnias no texto extraido do arquivo
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
@@ -51,9 +52,16 @@ def processar(arquivo):
     else:
         print(Fore.BLUE + f"Nenhum rosto detectado")
         print(Fore.RESET)
+
+    if encontrados_etnias:
+        print(Fore.RED + f"Etnia encontrada no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
+    else:
+        print(Fore.BLUE + f"Não encontrada etnia no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     # -------------------------------------- Imprime os resultados -------------------------------------- #
         
-    if encontrados_nomes or encontrados_cpf or encontrados_cnpj:
+    if encontrados_nomes or encontrados_cpf or encontrados_cnpj or encontrados_etnias or rosto_reconhecido:
         criptografar_arquivo_caminho(arquivo)
     else:
         print(Fore.CYAN + f"Não encontrado dados sensíveis no arquivo {os.path.basename(arquivo)}")
