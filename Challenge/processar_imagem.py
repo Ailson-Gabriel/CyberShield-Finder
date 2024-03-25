@@ -16,12 +16,12 @@ def processar(arquivo):
 
     print(Fore.LIGHTWHITE_EX + "Processando imagem:", os.path.basename(arquivo))
     
-    rosto_reconhecido = reconhecimento_facial(arquivo)
     texto_extraido = pytesseract.image_to_string(Image.open(arquivo), lang='por') # Extrai o texto da imagem
 
     encontrados_nomes = encontrar_nomes(texto_extraido) # Encontra nomes no texto extraido do arquivo
     encontrados_cpf = encontrar_cpf(texto_extraido) # Encontra CPFs no texto extraido do arquivo
     encontrados_cnpj = encontrar_cnpj(texto_extraido) # Encontra CNPJs no texto extraido do arquivo
+    rosto_reconhecido = reconhecimento_facial(arquivo) # Encontra rostos no arquivo da imagem
     encontrados_etnias = encontrar_etnias(texto_extraido) # Encontra Etnias no texto extraido do arquivo
     encontrados_religioes = encontrar_religiao(texto_extraido) # Encontra Religioes no texto extraido do arquivo
 
@@ -77,6 +77,16 @@ def processar(arquivo):
 
 
 def reconhecimento_facial(caminho_imagem):
+    """
+    Processa uma imagem usando OpenCV e busca por Rostos.
+
+    Parâmetros:
+        arquivo (str): O caminho para o arquivo de imagem a ser processada.
+    Retorna:
+        bool: True ou False se encontrou ou não.
+    """
+    print(Fore.YELLOW + "BUSCANDO ROSTOS")
+    print(Fore.RESET)
     # Carrega o classificador pré-treinado para detecção de faces
     classificador_face = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
