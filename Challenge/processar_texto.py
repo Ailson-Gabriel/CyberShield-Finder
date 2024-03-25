@@ -1,5 +1,5 @@
 import os
-from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj, encontrar_etnias
+from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj, encontrar_etnias, encontrar_religiao
 from criptografar_arquivo import criptografar_arquivo_caminho
 from colorama import Fore
 

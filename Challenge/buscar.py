@@ -91,3 +91,23 @@ def encontrar_etnias(texto):
             if etnia not in encontrados:    
                 encontrados.append(etnia)
     return encontrados
+
+def encontrar_religiao(texto):
+    """
+    Encontra religioes em um texto.
+
+    Argumentos:
+        texto (str): O texto no qual procurar religioes.
+
+    Retorna:
+        list: Lista de religioes encontradas.
+    """
+    print(Fore.YELLOW + "\nBUSCANDO RELIGIOES")
+    caminho_txt = "religiao.txt" # Caminho para o arquivo de texto com os religioes
+    religioes = ler_arquivo_txt(caminho_txt) # Cria uma lista com as religioes do arquivo
+    encontrados = []
+    for religiao in religioes:
+        if re.search(r'\b' + re.escape(religiao) + r'\b', texto, re.IGNORECASE):
+            if religiao not in encontrados:    
+                encontrados.append(religiao)
+    return encontrados

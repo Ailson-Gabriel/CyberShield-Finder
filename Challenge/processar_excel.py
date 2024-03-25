@@ -1,7 +1,7 @@
 import os
 import xlrd
 import openpyxl
-from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj, encontrar_etnias
+from buscar import encontrar_nomes, encontrar_cpf, encontrar_cnpj, encontrar_etnias, encontrar_religiao
 from criptografar_arquivo import criptografar_arquivo_caminho
 from colorama import Fore
 
@@ -21,6 +21,7 @@ def processar(arquivo):
     encontrados_cpf = encontrar_cpf(texto_str) # Encontra CPFs no texto extraido do arquivo
     encontrados_cnpj = encontrar_cnpj(texto_str) # Encontra CNPJs no texto extraido do arquivo
     encontrados_etnias = encontrar_etnias(texto_str) # Encontra Etnias no texto extraido do arquivo
+    encontrados_religioes = encontrar_religiao(texto_str) # Encontra Religioes no texto extraido do arquivo
 
     # -------------------------------------- Imprime os resultados -------------------------------------- #
     if encontrados_nomes:
@@ -50,9 +51,16 @@ def processar(arquivo):
     else:
         print(Fore.BLUE + f"Não encontrada etnia no arquivo {os.path.basename(arquivo)}\n")
         print(Fore.RESET)
+    
+    if encontrados_religioes:
+        print(Fore.RED + f"Religiao encontrada no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
+    else:
+        print(Fore.BLUE + f"Não encontrada Religiao no arquivo {os.path.basename(arquivo)}\n")
+        print(Fore.RESET)
     # -------------------------------------- Imprime os resultados -------------------------------------- #
         
-    if encontrados_nomes or encontrados_cpf or encontrados_cnpj or encontrados_etnias:
+    if encontrados_nomes or encontrados_cpf or encontrados_cnpj or encontrados_etnias or encontrados_religioes:
         criptografar_arquivo_caminho(arquivo)
     else:
         print(Fore.CYAN + f"Não encontrado dados sensíveis no arquivo {os.path.basename(arquivo)}")
