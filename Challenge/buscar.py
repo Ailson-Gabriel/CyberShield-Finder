@@ -15,7 +15,8 @@ def encontrar_nomes(texto):
         list: Lista de nomes encontrados.
     """
     print(Fore.YELLOW + "\nBUSCANDO NOMES")
-    caminho_txt = "nomes.txt" # Caminho para o arquivo de texto com os nomes
+    print(Fore.RESET)
+    caminho_txt = "wordlists\\nomes.txt" # Caminho para o arquivo de texto com os nomes
     nomes = ler_arquivo_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     encontrados = []
     for nome in nomes:
@@ -35,6 +36,7 @@ def encontrar_cpf(texto):
         list: Lista de CPFs encontrados.
     """
     print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CPFs")
+    print(Fore.RESET)
     cpfs_validos = []
 
     cpfs_potenciais = re.findall(r'\b(?:\d{3}\.){2}\d{3}-\d{2}|\b\d{11}\b', texto)
@@ -57,7 +59,7 @@ def encontrar_cnpj(texto):
     Retorna:
         list: Lista de CNPJs encontrados.
     """
-    print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CNPJs\n")
+    print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CNPJs")
     print(Fore.RESET)
     cnpjs_validos = []
 
@@ -82,8 +84,9 @@ def encontrar_etnias(texto):
     Retorna:
         list: Lista de etnias encontradas.
     """
-    print(Fore.YELLOW + "\nBUSCANDO ETNIAS")
-    caminho_txt = "etnias.txt" # Caminho para o arquivo de texto com os etnias
+    print(Fore.YELLOW + "BUSCANDO ETNIAS")
+    print(Fore.RESET)
+    caminho_txt = "wordlists\etnias.txt" # Caminho para o arquivo de texto com os etnias
     etnias = ler_arquivo_txt(caminho_txt) # Cria uma lista com as etnias do arquivo
     encontrados = []
     for etnia in etnias:
@@ -102,8 +105,9 @@ def encontrar_religiao(texto):
     Retorna:
         list: Lista de religioes encontradas.
     """
-    print(Fore.YELLOW + "\nBUSCANDO RELIGIOES")
-    caminho_txt = "religiao.txt" # Caminho para o arquivo de texto com os religioes
+    print(Fore.YELLOW + "BUSCANDO RELIGIÕES\n")
+    print(Fore.RESET)
+    caminho_txt = "wordlists\\religiao.txt" # Caminho para o arquivo de texto com os religioes
     religioes = ler_arquivo_txt(caminho_txt) # Cria uma lista com as religioes do arquivo
     encontrados = []
     for religiao in religioes:

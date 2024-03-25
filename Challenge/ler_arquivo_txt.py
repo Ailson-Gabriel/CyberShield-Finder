@@ -9,6 +9,8 @@ def ler_arquivo_txt(caminho_txt):
     Retorno:
         lista: Uma lista contendo todo o conteúdo lido do arquivo de texto.
     """
-    with open(caminho_txt, 'r') as file:
+    #with open(caminho_txt, 'r') as file:
+        #texto = file.read().splitlines()
+    with open(caminho_txt, 'r', encoding='utf-8') as file:
         texto = file.read().splitlines()
     return texto
