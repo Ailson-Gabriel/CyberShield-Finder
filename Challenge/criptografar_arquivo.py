@@ -50,6 +50,4 @@ def criptografar_arquivo_caminho(caminho_arquivo):
     # Criptografa o arquivo usando a chave carregada e salva o arquivo criptografado
     criptografar_arquivo(chave_carregada, caminho_arquivo, nome_arquivo_criptografado)
     os.remove(caminho_arquivo)
-
-    # Imprime uma mensagem indicando que o arquivo foi criptografado com sucesso e salvo
-    print(f"\nArquivo {os.path.basename(caminho_arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(nome_arquivo_criptografado)}.\n")
+    

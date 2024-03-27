@@ -2,9 +2,11 @@ import re
 from ler_arquivo_txt import ler_arquivo_txt
 from valida_cpf import valida_cpf
 from valida_cnpj import valida_cnpj
-from colorama import Fore
+from print_textbox import print_to_textbox
+from colorama import init, Fore
+init()
 
-def encontrar_nomes(texto):
+def encontrar_nomes(texto, textbox):
     """
     Encontra nomes em um texto.
 
@@ -14,9 +16,10 @@ def encontrar_nomes(texto):
     Retorna:
         list: Lista de nomes encontrados.
     """
-    print(Fore.YELLOW + "\nBUSCANDO NOMES")
-    print(Fore.RESET)
-    caminho_txt = "wordlists\\nomes.txt" # Caminho para o arquivo de texto com os nomes
+    print_to_textbox(textbox, "BUSCANDO NOMES",)
+    #print(Fore.YELLOW + "\nBUSCANDO NOMES")
+    #print(Fore.RESET)
+    caminho_txt = f"wordlists\\nomes.txt" # Caminho para o arquivo de texto com os nomes
     nomes = ler_arquivo_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
     encontrados = []
     for nome in nomes:
@@ -26,7 +29,7 @@ def encontrar_nomes(texto):
                 #print(f"Nome encontrado: {nome}")
     return encontrados
 
-def encontrar_cpf(texto):
+def encontrar_cpf(texto, textbox):
     """
     Encontra CPFs em um texto.
     Argumento:
@@ -35,8 +38,9 @@ def encontrar_cpf(texto):
     Retorna:
         list: Lista de CPFs encontrados.
     """
-    print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CPFs")
-    print(Fore.RESET)
+    print_to_textbox(textbox, "BUSCANDO POSSÍVEIS CPFs",)
+    #print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CPFs")
+    #print(Fore.RESET)
     cpfs_validos = []
 
     cpfs_potenciais = re.findall(r'\b(?:\d{3}\.){2}\d{3}-\d{2}|\b\d{11}\b', texto)
@@ -50,7 +54,7 @@ def encontrar_cpf(texto):
                 #print(f"CPF válido encontrado: {cpf}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
     return cpfs_validos
 
-def encontrar_cnpj(texto):
+def encontrar_cnpj(texto, textbox):
     """
     Encontra CNPJs em um texto.
     Argumento:
@@ -59,8 +63,9 @@ def encontrar_cnpj(texto):
     Retorna:
         list: Lista de CNPJs encontrados.
     """
-    print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CNPJs")
-    print(Fore.RESET)
+    print_to_textbox(textbox, "BUSCANDO POSSÍVEIS CNPJs",)
+    #print(Fore.YELLOW + "BUSCANDO POSSÍVEIS CNPJs")
+    #print(Fore.RESET)
     cnpjs_validos = []
 
     # Encontra todos os conjuntos de 14 números ou CNPJs formatados corretamente usando expressão regular
@@ -74,7 +79,7 @@ def encontrar_cnpj(texto):
                 #print(f"CNPJ válido encontrado: {cnpj}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
     return cnpjs_validos
 
-def encontrar_etnias(texto):
+def encontrar_etnias(texto, textbox):
     """
     Encontra nomes em um texto.
 
@@ -84,9 +89,10 @@ def encontrar_etnias(texto):
     Retorna:
         list: Lista de etnias encontradas.
     """
-    print(Fore.YELLOW + "BUSCANDO ETNIAS")
-    print(Fore.RESET)
-    caminho_txt = "wordlists\etnias.txt" # Caminho para o arquivo de texto com os etnias
+    print_to_textbox(textbox, "BUSCANDO ETNIAS",)
+    #print(Fore.YELLOW + "BUSCANDO ETNIAS")
+    #print(Fore.RESET)
+    caminho_txt = f"wordlists\etnias.txt" # Caminho para o arquivo de texto com os etnias
     etnias = ler_arquivo_txt(caminho_txt) # Cria uma lista com as etnias do arquivo
     encontrados = []
     for etnia in etnias:
@@ -95,7 +101,7 @@ def encontrar_etnias(texto):
                 encontrados.append(etnia)
     return encontrados
 
-def encontrar_religiao(texto):
+def encontrar_religiao(texto, textbox):
     """
     Encontra religioes em um texto.
 
@@ -105,9 +111,10 @@ def encontrar_religiao(texto):
     Retorna:
         list: Lista de religioes encontradas.
     """
-    print(Fore.YELLOW + "BUSCANDO RELIGIÕES\n")
-    print(Fore.RESET)
-    caminho_txt = "wordlists\\religiao.txt" # Caminho para o arquivo de texto com os religioes
+    print_to_textbox(textbox, "BUSCANDO RELIGIÕES",)
+    #print(Fore.YELLOW + "BUSCANDO RELIGIÕES\n")
+    #print(Fore.RESET)
+    caminho_txt = f"wordlists\\religiao.txt" # Caminho para o arquivo de texto com os religioes
     religioes = ler_arquivo_txt(caminho_txt) # Cria uma lista com as religioes do arquivo
     encontrados = []
     for religiao in religioes:
