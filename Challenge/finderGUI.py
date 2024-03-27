@@ -2,7 +2,7 @@ import tkinter as tk
 import customtkinter
 import threading
 from tkinter import filedialog, messagebox
-from main import varrer_diretorio
+from controller import varrer_diretorio
 from print_textbox import print_to_textbox
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
