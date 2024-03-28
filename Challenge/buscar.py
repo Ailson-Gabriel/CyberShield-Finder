@@ -3,25 +3,25 @@ from ler_arquivo_txt import ler_arquivo_txt
 from valida_cpf import valida_cpf
 from valida_cnpj import valida_cnpj
 
-def encontrar_nomes(texto):
+def encontrar_dados_sensiveis(texto, contexto):
     """
-    Encontra nomes em um texto.
+    Encontra dados em um texto.
 
     Argumentos:
-        texto (str): O texto no qual procurar nomes.
+        texto (str): O texto no qual procurar os dados sensíveis
+        contexto (str): O contexto no qual procurar os dados sensíveis
 
     Retorna:
-        list: Lista de nomes encontrados.
+        list: Lista de dados sensíveis encontrados.
     """
-    
-    caminho_txt = f"wordlists\\nomes.txt" # Caminho para o arquivo de texto com os nomes
-    nomes = ler_arquivo_txt(caminho_txt) # Cria uma lista com os nomes do arquivo
+
+    caminho_txt = f"wordlists\{contexto}.txt" # Caminho para o arquivo de texto com os dados que podem ser sensíveis
+    lista = ler_arquivo_txt(caminho_txt) # Cria uma lista com os dados do arquivo
     encontrados = []
-    for nome in nomes:
-        if re.search(r'\b' + re.escape(nome) + r'\b', texto, re.IGNORECASE):
-            if nome not in encontrados:    
-                encontrados.append(nome)
-                #print(f"Nome encontrado: {nome}")
+    for elemento in lista:
+        if re.search(r'\b' + re.escape(elemento) + r'\b', texto, re.IGNORECASE):
+            if elemento not in encontrados:    
+                encontrados.append(elemento)
     return encontrados
 
 def encontrar_cpf(texto):
@@ -70,42 +70,3 @@ def encontrar_cnpj(texto):
                 #print(f"CNPJ válido encontrado: {cnpj}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
     return cnpjs_validos
 
-def encontrar_etnias(texto):
-    """
-    Encontra nomes em um texto.
-
-    Argumentos:
-        texto (str): O texto no qual procurar etnias.
-
-    Retorna:
-        list: Lista de etnias encontradas.
-    """
-
-    caminho_txt = f"wordlists\etnias.txt" # Caminho para o arquivo de texto com os etnias
-    etnias = ler_arquivo_txt(caminho_txt) # Cria uma lista com as etnias do arquivo
-    encontrados = []
-    for etnia in etnias:
-        if re.search(r'\b' + re.escape(etnia) + r'\b', texto, re.IGNORECASE):
-            if etnia not in encontrados:    
-                encontrados.append(etnia)
-    return encontrados
-
-def encontrar_religiao(texto):
-    """
-    Encontra religioes em um texto.
-
-    Argumentos:
-        texto (str): O texto no qual procurar religioes.
-
-    Retorna:
-        list: Lista de religioes encontradas.
-    """
-
-    caminho_txt = f"wordlists\\religiao.txt" # Caminho para o arquivo de texto com os religioes
-    religioes = ler_arquivo_txt(caminho_txt) # Cria uma lista com as religioes do arquivo
-    encontrados = []
-    for religiao in religioes:
-        if re.search(r'\b' + re.escape(religiao) + r'\b', texto, re.IGNORECASE):
-            if religiao not in encontrados:    
-                encontrados.append(religiao)
-    return encontrados
