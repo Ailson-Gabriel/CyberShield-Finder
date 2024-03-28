@@ -2,6 +2,7 @@ import tkinter as tk
 import customtkinter
 import threading
 from tkinter import filedialog, messagebox
+from PIL import Image
 from controller import varrer_diretorio
 from print_textbox import print_to_textbox
 
@@ -26,8 +27,17 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid(row=0, column=0, rowspan=4, sticky="nsew")
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
 
-        self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="Finder", font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        # load logo image
+        self.logo_image = customtkinter.CTkImage(Image.open("CyberShieldLOGO.png"), size=(200, 200))
+
+        # create logo label with image
+        self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, image=self.logo_image, text="Finder" ,compound="top", font=customtkinter.CTkFont(size=30, weight="bold"))
+        self.logo_label.grid(row=0, column=0, padx=5, pady=0)
+
+        # create title label
+        #self.title_label = customtkinter.CTkLabel(self.sidebar_frame, text="Finder", font=customtkinter.CTkFont(size=20, weight="bold"))
+        #self.title_label.grid(row=1, column=0, padx=20, pady=(20, 10))
+
 
         self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Selecionar diretório", command=self.selecionar_diretorio)
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
@@ -58,7 +68,6 @@ class App(customtkinter.CTk):
         # Defina o valor inicial após a criação do CTkOptionMenu
         self.scaling_optionemenu.set("100%")
    
-
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
@@ -70,9 +79,16 @@ class App(customtkinter.CTk):
         # Open the file dialog to select a directory
         directory = filedialog.askdirectory()
         if directory:  # Verifique se um diretório foi selecionado
+            self.limpar_textbox()  # Clear the textbox
             self.entry.delete(0, 'end')  # Clear the current entry
             self.entry.insert(0, directory)  # Insert the selected
+            self.textbox.delete('1.0', 'end')  # Clear the textbox
             print_to_textbox(self.textbox, f"Selecionado diretório: {directory}")
+
+    def limpar_textbox(self):
+        self.textbox.configure(state='normal')
+        self.textbox.delete('1.0', 'end')  # Clear the textbox
+        self.textbox.configure(state='normal')
 
     def iniciar_varredura(self):
         directory = self.entry.get()
@@ -80,6 +96,7 @@ class App(customtkinter.CTk):
             # Mostre uma mensagem de erro e retorne
             messagebox.showerror("Erro", "Por favor, selecione um diretório antes de iniciar a varredura.")
             return
+        self.limpar_textbox()
         # Chame a função varrer_diretorio do main.py
         varrer_diretorio(self.entry.get(), self.textbox)
 
