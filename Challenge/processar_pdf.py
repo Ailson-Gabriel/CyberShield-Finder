@@ -17,12 +17,10 @@ def processar(arquivo, textbox):
     print_to_textbox(textbox, f"Processando PDF: {os.path.basename(arquivo)}",)
     texto_pdf = extrair_texto(arquivo) 
     
-    dados_sensiveis_encontrados = varredura(textbox, texto_pdf) # Verifica se há dados sensíveis no texto extraído do arquivo Excel
+    dados_sensiveis_encontrados = varredura(textbox, texto_pdf, arquivo) # Verifica se há dados sensíveis no texto extraído do arquivo Excel
     if dados_sensiveis_encontrados:
         criptografar_arquivo_caminho(arquivo)
         print_to_textbox(textbox, f"\nArquivo {os.path.basename(arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(arquivo+'.criptografado')}")
-    else:
-        print_to_textbox(textbox, f"Não encontrado dados sensíveis que possam ser associados a algum individuo no arquivo {os.path.basename(arquivo)}")
 
 def extrair_texto(arquivo):
     """

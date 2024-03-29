@@ -1,6 +1,4 @@
-import tkinter as tk
 import customtkinter
-import threading
 from tkinter import filedialog, messagebox
 from PIL import Image
 from controller import varrer_diretorio
@@ -34,11 +32,6 @@ class App(customtkinter.CTk):
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, image=self.logo_image, text="Finder" ,compound="top", font=customtkinter.CTkFont(size=30, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=5, pady=0)
 
-        # create title label
-        #self.title_label = customtkinter.CTkLabel(self.sidebar_frame, text="Finder", font=customtkinter.CTkFont(size=20, weight="bold"))
-        #self.title_label.grid(row=1, column=0, padx=20, pady=(20, 10))
-
-
         self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Selecionar diretório", command=self.selecionar_diretorio)
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
 
@@ -62,7 +55,7 @@ class App(customtkinter.CTk):
         self.scaling_label = customtkinter.CTkLabel(self.sidebar_frame, text="UI Scaling:", anchor="w")
         self.scaling_label.grid(row=7, column=0, padx=20, pady=(10, 0))
         self.scaling_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["80%", "90%", "100%", "110%", "120%"],
-                                                            command=self.change_scaling_event)
+                                                               command=self.change_scaling_event)
         self.scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20))
 
         # Defina o valor inicial após a criação do CTkOptionMenu
@@ -88,7 +81,7 @@ class App(customtkinter.CTk):
     def limpar_textbox(self):
         self.textbox.configure(state='normal')
         self.textbox.delete('1.0', 'end')  # Clear the textbox
-        self.textbox.configure(state='normal')
+        self.textbox.configure(state='disabled')
 
     def iniciar_varredura(self):
         directory = self.entry.get()
