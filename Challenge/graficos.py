@@ -30,6 +30,10 @@ def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_ro
     plt.ylabel('Quantidade Encontrada')
     plt.title(f'Arquivo {os.path.basename(arquivo)}')
 
+    # Verifica se o diretório 'graficos' existe
+    if not os.path.exists('graficos'):
+        # Se não existir, cria o diretório
+        os.makedirs('graficos')
     # Salva o gráfico em um arquivo
     plt.savefig(f'graficos/grafico_{os.path.basename(arquivo)}.png')
     plt.savefig(f'graficos/grafico_{os.path.basename(arquivo)}.svg')
