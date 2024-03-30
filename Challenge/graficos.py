@@ -1,8 +1,8 @@
 import os
-import tkinter as tk
-from tkinter import messagebox
 from matplotlib import pyplot as plt
-
+import ctypes
+import matplotlib
+matplotlib.use('Qt5Agg')
 
 def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
         encontrados_politica, encontrados_orientacao_sexual, arquivo):
@@ -20,26 +20,24 @@ def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_ro
     dados["Ideologia\npolítica"] = len(encontrados_politica) if encontrados_politica else 0
     dados["Sexualidade"] = len(encontrados_orientacao_sexual) if encontrados_orientacao_sexual else 0
 
-    # Cria uma janela tkinter invisível
-    root = tk.Tk()
-    root.withdraw()
+    # Cria uma figura com um tamanho específico
+    plt.figure(figsize=(11, 7))
 
-    # Pergunta ao usuário se ele deseja abrir o gráfico
-    if messagebox.askyesno('Abrir gráfico', f'Deseja abrir o gráfico do arquivo {os.path.basename(arquivo)}?'):
-        # Cria uma figura com um tamanho específico
-        plt.figure(figsize=(11, 7))
+    # Cria um gráfico de barras
+    plt.bar(dados.keys(), dados.values())
 
-        # Cria um gráfico de barras
-        plt.bar(dados.keys(), dados.values())
+    plt.xlabel('Dados Sensíveis')
+    plt.ylabel('Quantidade Encontrada')
+    plt.title(f'Arquivo {os.path.basename(arquivo)}')
 
-        plt.xlabel('Dados Sensíveis')
-        plt.ylabel('Quantidade Encontrada')
-        plt.title(f'Arquivo {os.path.basename(arquivo)}')
+    # Salva o gráfico em um arquivo
+    plt.savefig(f'graficos/grafico_{os.path.basename(arquivo)}.png')
+    plt.savefig(f'graficos/grafico_{os.path.basename(arquivo)}.svg')
 
-        # Exibe o gráfico sem bloquear a execução do código
+    # Cria uma caixa de mensagem
+    MessageBox = ctypes.windll.user32.MessageBoxW
+    result = MessageBox(None, 'Deseja abrir o gráfico do arquivo {}?'.format(os.path.basename(arquivo)), 'Abrir gráfico', 4)
+
+    # Se o usuário clicar em 'OK', exibe o gráfico
+    if result == 6:
         plt.show()
-        pass
-    else:
-        # Finaliza a função
-        root.destroy()  # Ensure the Tkinter application is properly closed
-        return
