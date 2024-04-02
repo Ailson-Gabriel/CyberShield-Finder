@@ -36,7 +36,6 @@ def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_ro
         os.makedirs('graficos')
     # Salva o gráfico em um arquivo
     plt.savefig(f'graficos/grafico_{os.path.basename(arquivo)}.png')
-    plt.savefig(f'graficos/grafico_{os.path.basename(arquivo)}.svg')
 
     # Cria uma caixa de mensagem
     MessageBox = ctypes.windll.user32.MessageBoxW

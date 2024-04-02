@@ -1,12 +1,9 @@
-import tkinter as tk
+import os
 import customtkinter
-import threading
 from tkinter import filedialog, messagebox
 from PIL import Image
 from controller import varrer_diretorio
 from print_textbox import print_to_textbox
-import os
-from graficos import *
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -14,7 +11,7 @@ customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard),
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-    
+
         # configure window
         self.title("CyberShield Finder")
         self.geometry(f"{1100}x{580}")
@@ -36,24 +33,23 @@ class App(customtkinter.CTk):
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, image=self.logo_image, text="Finder" ,compound="top", font=customtkinter.CTkFont(size=30, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=5, pady=0)
 
-        # create title label
-        #elf.title_label = customtkinter.CTkLabel(self.sidebar_frame, text="Finder", font=customtkinter.CTkFont(size=20, weight="bold"))
-        #self.title_label.grid(row=1, column=0, padx=20, pady=(20, 10))
-
-
-        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Selecionar Pasta/Diretorio", command=self.selecionar_diretorio)
+        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Selecionar diretório", command=self.selecionar_diretorio)
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
 
         self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Iniciar varredura", command=self.iniciar_varredura)
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
+
+        self.botao_dashboard = customtkinter.CTkButton(self.sidebar_frame, text="Criar Dashboard", command=self.criar_dashboard)
+        self.botao_dashboard.grid(row=3, column=0, padx=20, pady=10)
+        self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
 
         # create main entry and button
         self.entry = customtkinter.CTkEntry(self, placeholder_text="")
         self.entry.grid(row=3, column=1, columnspan=2, padx=(20, 0), pady=(20, 20), sticky="nsew")
 
         # create TEXTBOX
-        self.textbox = customtkinter.CTkTextbox(self, width=950, height=250, state="disabled")
-        self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky='nsew')
+        self.textbox = customtkinter.CTkTextbox(self,width=250, state="disabled")
+        self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")
 
         self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Appearance Mode:", anchor="w")
         self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
@@ -64,19 +60,12 @@ class App(customtkinter.CTk):
         self.scaling_label = customtkinter.CTkLabel(self.sidebar_frame, text="UI Scaling:", anchor="w")
         self.scaling_label.grid(row=7, column=0, padx=20, pady=(10, 0))
         self.scaling_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["80%", "90%", "100%", "110%", "120%"],
-                                                            command=self.change_scaling_event)
+                                                               command=self.change_scaling_event)
         self.scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20))
 
         # Defina o valor inicial após a criação do CTkOptionMenu
         self.scaling_optionemenu.set("100%")
-
-        #Cria uma Tela de Rolagem Para os arquivos
-        self.scrollable_frame = customtkinter.CTkScrollableFrame(self, label_text="Visualizar Arquivos")
-        self.scrollable_frame.grid(row=0, column=2, padx=(20, 0), pady=(20, 0), sticky="nsew")
-        self.scrollable_frame.grid_columnconfigure(0, weight=1)
-        self.scrollable_frame_switches = []
-
-
+   
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
@@ -84,11 +73,8 @@ class App(customtkinter.CTk):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         customtkinter.set_widget_scaling(new_scaling_float)
 
-
-#Abrir Pasta e Visualizar Arquivos
-
     def selecionar_diretorio(self):
-        # Abra o arquivo para selecionar o diretorio
+        # Open the file dialog to select a directory
         directory = filedialog.askdirectory()
         if directory:  # Verifique se um diretório foi selecionado
             self.limpar_textbox()  # Clear the textbox
@@ -97,22 +83,10 @@ class App(customtkinter.CTk):
             self.textbox.delete('1.0', 'end')  # Clear the textbox
             print_to_textbox(self.textbox, f"Selecionado diretório: {directory}")
 
-        
-            #VISUALIZADOR DE ARQUIVOS
-            caminho_arquivos = os.listdir(directory) 
-
-        for i, caminho_arquivo in enumerate(caminho_arquivos):
-            switch = customtkinter.CTkButton(master=self.scrollable_frame, text=f"{os.path.basename(caminho_arquivo)}")
-            switch.grid(row=i, column=0, padx=10, pady=(0, 20))
-            self.scrollable_frame_switches.append(switch)
-            
-
-
     def limpar_textbox(self):
         self.textbox.configure(state='normal')
         self.textbox.delete('1.0', 'end')  # Clear the textbox
-        self.textbox.configure(state='normal')
-
+        self.textbox.configure(state='disabled')
 
     def iniciar_varredura(self):
         directory = self.entry.get()
@@ -123,11 +97,35 @@ class App(customtkinter.CTk):
         self.limpar_textbox()
         # Chame a função varrer_diretorio do main.py
         varrer_diretorio(self.entry.get(), self.textbox)
+        self.entry.delete(0, 'end')  # Clear the current entry
+        self.botao_dashboard.grid()
 
+    def criar_dashboard(self):
+        # Lista todos os arquivos no diretório 'graficos' que começam com 'grafico_' e terminam com '.png'
+        #graficos = [os.path.join('graficos', nome) for nome in os.listdir('graficos') if nome.startswith('grafico_') and nome.endswith('.png')]
 
+        # Cria e executa o dashboard
+        #dashboard = Dashboard(graficos)
+        #dashboard.mainloop()
+        print("CRIAR DASHBOARD")
 
+    '''
+    class Dashboard(Tk):
+        def __init__(self, graficos):
+            super().__init__()
 
+            # Carrega as imagens dos gráficos
+            self.images = [Image.open(grafico) for grafico in graficos]
+            self.graficos = [ImageTk.PhotoImage(image) for image in self.images]
 
+            # Cria labels para exibir as imagens
+            self.labels = [Label(self, image=grafico) for grafico in self.graficos]
+
+            # Posiciona as labels na janela
+            for label in self.labels:
+                label.pack()
+    '''
+    
 if __name__ == "__main__":
     app = App()
     app.mainloop()

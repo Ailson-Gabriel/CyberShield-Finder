@@ -20,6 +20,6 @@ def processar(arquivo, textbox):
 
     dados_sensiveis_encontrados = varredura(textbox, texto_extraido, arquivo)
 
-    if dados_sensiveis_encontrados:
+    if callable(dados_sensiveis_encontrados) and dados_sensiveis_encontrados(textbox, texto_extraido, arquivo):
         criptografar_arquivo_caminho(arquivo)
         print_to_textbox(textbox, f"\nArquivo {os.path.basename(arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(arquivo+'.criptografado')}")
