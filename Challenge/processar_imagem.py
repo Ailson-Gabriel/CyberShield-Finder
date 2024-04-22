@@ -19,7 +19,6 @@ def processar(arquivo, textbox):
     texto_extraido = pytesseract.image_to_string(Image.open(arquivo), lang='por') # Extrai o texto da imagem
 
     dados_sensiveis_encontrados = varredura(textbox, texto_extraido, arquivo)
-
-    if callable(dados_sensiveis_encontrados) and dados_sensiveis_encontrados(textbox, texto_extraido, arquivo):
+    if dados_sensiveis_encontrados:    
         criptografar_arquivo_caminho(arquivo)
         print_to_textbox(textbox, f"\nArquivo {os.path.basename(arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(arquivo+'.criptografado')}")

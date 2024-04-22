@@ -2,6 +2,8 @@ import os
 import customtkinter
 from tkinter import filedialog, messagebox
 from PIL import Image
+import subprocess
+#import appweb
 from controller import varrer_diretorio
 from print_textbox import print_to_textbox
 
@@ -39,7 +41,7 @@ class App(customtkinter.CTk):
         self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Iniciar varredura", command=self.iniciar_varredura)
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
 
-        self.botao_dashboard = customtkinter.CTkButton(self.sidebar_frame, text="Criar Dashboard", command=self.criar_dashboard)
+        self.botao_dashboard = customtkinter.CTkButton(self.sidebar_frame, text="Criar Dashboard Web", command=self.criar_dashboard)
         self.botao_dashboard.grid(row=3, column=0, padx=20, pady=10)
         self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
 
@@ -77,15 +79,15 @@ class App(customtkinter.CTk):
         # Open the file dialog to select a directory
         directory = filedialog.askdirectory()
         if directory:  # Verifique se um diretório foi selecionado
-            self.limpar_textbox()  # Clear the textbox
+            self.limpar_textbox()  # Limpa o TextBox
             self.entry.delete(0, 'end')  # Clear the current entry
             self.entry.insert(0, directory)  # Insert the selected
-            self.textbox.delete('1.0', 'end')  # Clear the textbox
+            self.textbox.delete('1.0', 'end')  # Limpa o TextBox
             print_to_textbox(self.textbox, f"Selecionado diretório: {directory}")
 
     def limpar_textbox(self):
         self.textbox.configure(state='normal')
-        self.textbox.delete('1.0', 'end')  # Clear the textbox
+        self.textbox.delete('1.0', 'end')  # Limpa o TextBox
         self.textbox.configure(state='disabled')
 
     def iniciar_varredura(self):
@@ -99,6 +101,32 @@ class App(customtkinter.CTk):
         varrer_diretorio(self.entry.get(), self.textbox)
         self.entry.delete(0, 'end')  # Clear the current entry
         self.botao_dashboard.grid()
+        self.criar_botoes_graficos()
+
+    def criar_botoes_graficos(self):
+        # Obtém a lista de arquivos .png no diretório "graficos"
+        arquivos_png = [arq for arq in os.listdir("graficos") if arq.endswith(".png")]
+
+        # Cria um frame para os botões
+        self.frame_botoes = customtkinter.CTkFrame(self)
+        self.frame_botoes.grid(row=2, column=1, padx=(20, 0), pady=(10, 0), sticky="nsew")
+
+        # Cria um botão para cada arquivo .png
+        j = 0  # Coluna atual
+        for i, arquivo in enumerate(arquivos_png):
+            if i % 4 == 0 and i > 0:  # Verifica se é o início de uma nova coluna
+                j += 1
+            nome_arquivo_sem_extensao, _ = os.path.splitext(arquivo)
+            nome_botao = nome_arquivo_sem_extensao[8:]  # Obtém a string a partir do 8º caractere (após "grafico_")
+            botao = customtkinter.CTkButton(self.frame_botoes, text=nome_botao, command=lambda a=arquivo: self.visualizar_grafico(a))
+            botao.grid(row=i % 4, column=j, padx=5, pady=5)  # Usa i % 3 para reiniciar a linha a cada 3 botões
+
+    def visualizar_grafico(self, nome_arquivo):
+        # Implemente aqui a lógica para visualizar o gráfico
+        # Você pode usar uma biblioteca como Pillow (PIL) para abrir e exibir a imagem
+        # Ou criar uma nova janela para exibir o gráfico
+        imagem = Image.open(os.path.join("graficos", nome_arquivo))
+        imagem.show()
 
     def criar_dashboard(self):
         # Lista todos os arquivos no diretório 'graficos' que começam com 'grafico_' e terminam com '.png'
@@ -107,24 +135,9 @@ class App(customtkinter.CTk):
         # Cria e executa o dashboard
         #dashboard = Dashboard(graficos)
         #dashboard.mainloop()
-        print("CRIAR DASHBOARD")
-
-    '''
-    class Dashboard(Tk):
-        def __init__(self, graficos):
-            super().__init__()
-
-            # Carrega as imagens dos gráficos
-            self.images = [Image.open(grafico) for grafico in graficos]
-            self.graficos = [ImageTk.PhotoImage(image) for image in self.images]
-
-            # Cria labels para exibir as imagens
-            self.labels = [Label(self, image=grafico) for grafico in self.graficos]
-
-            # Posiciona as labels na janela
-            for label in self.labels:
-                label.pack()
-    '''
+        print_to_textbox(self.textbox,"CRIAR DASHBOARD WEB")
+        subprocess.Popen(["python", "appweb.py"])
+        #appweb.app.run(debug=True, port=8080)
     
 if __name__ == "__main__":
     app = App()

@@ -58,8 +58,6 @@ def abrir_caminho_pasta():
     label3.pack(pady=22)
     root.destroy()
 
-
-
 #Funcao do botao Procurar
 def comecar_procura():
     global label, label2
@@ -86,7 +84,6 @@ selecione_pasta.pack(pady=20)  # configura o botao
 #Botao Procurar
 iniciar_botao = customtkinter.CTkButton(janela, text='Descriptografar', command=comecar_procura)
 iniciar_botao.pack(pady=20)  # espacos entre o botao
-
 
 label = None           #Declara vazio para nao spamar a mensagem
 label2 = None          #Declara vazio para nao spamar a mensagem

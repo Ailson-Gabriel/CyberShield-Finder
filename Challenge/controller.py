@@ -4,6 +4,7 @@ from processar_texto import processar as processar_texto
 from processar_docx import processar as processar_docx
 from processar_pdf import processar as processar_pdf
 from processar_excel import processar as processar_excel
+from processar_pst import processar as processar_pst
 from print_textbox import print_to_textbox
 
 def varrer_diretorio(diretorio, textbox):
@@ -39,6 +40,10 @@ def varrer_diretorio(diretorio, textbox):
             elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
                 print_to_textbox(textbox, "-----------------------------------------------------------------------------------------------------------------")
                 processar_excel(os.path.join(diretorio, arquivo), textbox)
+            
+            #elif arquivo.endswith('.pst'):
+            #    print_to_textbox(textbox, "-----------------------------------------------------------------------------------------------------------------")
+            #    processar_pst(os.path.join(diretorio, arquivo), textbox)
 
     # Se nenhum arquivo foi processado, imprima uma mensagem
     if not arquivos_varridos:

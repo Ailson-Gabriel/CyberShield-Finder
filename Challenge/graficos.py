@@ -1,4 +1,5 @@
 import os
+import json
 from matplotlib import pyplot as plt
 import ctypes
 import matplotlib
@@ -44,3 +45,7 @@ def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_ro
     # Se o usuário clicar em 'OK', exibe o gráfico
     if result == 6:
         plt.show()
+
+    # Cria um arquivo JSON com os dados
+    #with open(f'graficos/{os.path.basename(arquivo)}.json', 'w') as json_file:
+    #    json.dump(dados, json_file)
