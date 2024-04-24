@@ -3,6 +3,7 @@ import customtkinter
 from tkinter import filedialog, messagebox
 from PIL import Image
 import subprocess
+from grava_resultados import inicia_dados
 #import appweb
 from controller import varrer_diretorio
 from print_textbox import print_to_textbox
@@ -98,6 +99,7 @@ class App(customtkinter.CTk):
             return
         self.limpar_textbox()
         # Chame a função varrer_diretorio do main.py
+        inicia_dados()
         varrer_diretorio(self.entry.get(), self.textbox)
         self.entry.delete(0, 'end')  # Clear the current entry
         self.botao_dashboard.grid()
