@@ -133,11 +133,18 @@ def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf
     else:
         print_to_textbox(textbox, f"\tNão encontrada Orientação sexual no arquivo")
 
+    print_to_textbox(textbox, "BUSCANDO POR DOENÇAS")
+    encontrados_doencas = encontrar_dados_sensiveis(texto, "doencas")
+    if encontrados_doencas:
+        print_to_textbox(textbox, f"\tDoenças encontradas no arquivo")
+    else:
+        print_to_textbox(textbox, f"\tNão encontrada Doenças no arquivo")
+
     if (encontrados_etnias or encontrados_religioes or encontrados_genero or 
-        encontrados_politica or encontrados_orientacao_sexual or encontrados_rostos):
+        encontrados_politica or encontrados_orientacao_sexual or encontrados_doencas or encontrados_rostos):
 
         grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
-        encontrados_politica, encontrados_orientacao_sexual, arquivo)
+        encontrados_politica, encontrados_orientacao_sexual, encontrados_doencas, arquivo)
         
         return True
     else:
