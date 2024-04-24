@@ -21,7 +21,7 @@ def varrer_diretorio(diretorio, textbox):
             # Adiciona o arquivo à lista de arquivos varridos
             arquivos_varridos.append(arquivo)
 
-            if arquivo.endswith('.jpg') or arquivo.endswith('.jpeg') or arquivo.endswith('.png'):
+            if arquivo.endswith(('.jpg', '.jpeg', '.png')):
                 print_to_textbox(textbox, "-----------------------------------------------------------------------------------------------------------------")
                 processar_imagem(os.path.join(diretorio, arquivo), textbox)
 
@@ -37,7 +37,7 @@ def varrer_diretorio(diretorio, textbox):
                 print_to_textbox(textbox, "-----------------------------------------------------------------------------------------------------------------")
                 processar_pdf(os.path.join(diretorio, arquivo), textbox)
 
-            elif arquivo.endswith('.xls') or arquivo.endswith('.xlsx'):
+            elif arquivo.endswith(('.xls', '.xlsx')):
                 print_to_textbox(textbox, "-----------------------------------------------------------------------------------------------------------------")
                 processar_excel(os.path.join(diretorio, arquivo), textbox)
             
