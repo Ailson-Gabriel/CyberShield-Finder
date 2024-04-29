@@ -48,7 +48,7 @@ class App(customtkinter.CTk):
 
         # create main entry and button
         self.entry = customtkinter.CTkEntry(self, placeholder_text="")
-        self.entry.grid(row=3, column=1, columnspan=2, padx=(20, 0), pady=(20, 20), sticky="nsew")
+        self.entry.grid(row=3, column=1, columnspan=2, padx=(20, 20), pady=(20, 20), sticky="nsew")
 
         # create TEXTBOX
         self.textbox = customtkinter.CTkTextbox(self,width=250, state="disabled")
