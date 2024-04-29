@@ -109,7 +109,7 @@ class App(customtkinter.CTk):
 
         # Cria um frame para os botões
         self.frame_botoes = customtkinter.CTkFrame(self)
-        self.frame_botoes.grid(row=2, column=1, padx=(20, 0), pady=(10, 0), sticky="nsew")
+        self.frame_botoes.grid(row=2, column=1, padx=(20, 20), pady=(10, 0), sticky="nsew")
 
         # Cria um botão para cada arquivo .png
         j = 0  # Coluna atual
