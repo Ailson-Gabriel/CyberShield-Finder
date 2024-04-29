@@ -79,26 +79,25 @@ def busca_por_individuos(textbox, texto, arquivo):
     else:
         print_to_textbox(textbox, f"\tNão encontrado CPF no arquivo")
 
-    print_to_textbox(textbox, "BUSCANDO POR CNPJ")
-    encontrados_cnpj = encontrar_cnpj(texto) # Encontra CNPJs no texto extraido do arquivo
-    if encontrados_cnpj:
-        print_to_textbox(textbox, f"\tCNPJ encontrado no arquivo")
-    else:
-        print_to_textbox(textbox, f"\tNão encontrado CNPJ no arquivo")
+    #print_to_textbox(textbox, "BUSCANDO POR CNPJ")
+    #encontrados_cnpj = encontrar_cnpj(texto) # Encontra CNPJs no texto extraido do arquivo
+    #if encontrados_cnpj:
+    #    print_to_textbox(textbox, f"\tCNPJ encontrado no arquivo")
+    #else:
+    #    print_to_textbox(textbox, f"\tNão encontrado CNPJ no arquivo")
 
     encontrados_rostos = False
     if arquivo.endswith('.jpg') or arquivo.endswith('.png') or arquivo.endswith('.jpeg'):
         encontrados_rostos = reconhecimento_facial(textbox, arquivo)
 
-    if encontrados_nomes or encontrados_cpf or encontrados_cnpj or encontrados_rostos:
-        if busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf, 
-                                     encontrados_cnpj, encontrados_rostos, arquivo) or encontrados_rostos:
+    if encontrados_nomes or encontrados_cpf or encontrados_rostos:
+        if busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf, encontrados_rostos, arquivo) or encontrados_rostos:
             return True
     else:
         print_to_textbox(textbox, f"\nNão foram encontrados individuos que possam ser associados a dados sensíveis")
         return False
         
-def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, arquivo):
+def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf,encontrados_rostos, arquivo):
     
     print_to_textbox(textbox, "BUSCANDO POR ETNIAS")
     encontrados_etnias = encontrar_dados_sensiveis(texto, "etnias") # Encontra Etnias no texto extraido do arquivo
@@ -145,7 +144,7 @@ def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf
     if (encontrados_etnias or encontrados_religioes or encontrados_genero or 
         encontrados_politica or encontrados_orientacao_sexual or encontrados_doencas or encontrados_rostos):
 
-        grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
+        grafico(encontrados_nomes, encontrados_cpf, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
         encontrados_politica, encontrados_orientacao_sexual, encontrados_doencas, arquivo)
         
         

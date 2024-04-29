@@ -10,6 +10,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.ticker import MaxNLocator
+from grava_resultados import load_data_from_txt
 import numpy as np
 import json
 #global image_image_1, image_image_2, image_image_3, image_image_4, image_image_5, image_image_6, image_image_7, image_image_8, image_image_9, image_image_10, image_image_11
@@ -20,24 +21,8 @@ ASSETS_PATH = OUTPUT_PATH / Path(r"assets\\frame0")
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-def load_data_from_txt(caminho_arquivo, nome_variavel):
-  with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
-    for linha in arquivo:
-      if linha.startswith(nome_variavel + ' ='):
-        valor = ast.literal_eval(linha.partition('=')[2])
-        return valor
-  return None  # Retorna None se a variável não for encontrada
-
 
 def dash():
-    #data = load_data_from_txt('db\\base.txt')
-    #dados_sensiveis_encontrados = data['dados_sensiveis_encontrados']
-    #quantidade_por_tipo = data['quantidade_por_tipo']
-    #criptografados = data['criptografados']
-    #qntd_total = data['qntd_total']
-    #tabela_de_arquivos = data['tabela_de_arquivos']
-    
-    #from db.base import dados_sensiveis_encontrados, quantidade_por_tipo, criptografados, qntd_total, tabela_de_arquivos
     dados_sensiveis_encontrados = load_data_from_txt('db\\base.txt', 'dados_sensiveis_encontrados')
     quantidade_por_tipo = load_data_from_txt('db\\base.txt', 'quantidade_por_tipo')
     criptografados = load_data_from_txt('db\\base.txt', 'criptografados')
@@ -150,10 +135,10 @@ def dash():
     )
 
     canvas.create_text(
-        452.0,
+        460.0,
         129.0,
         anchor="nw",
-        text=f"{qntd_total[1]} Arquivos",
+        text=f"{len(tabela_de_arquivos)} Arquivos",
         fill="#FFFFFF",
         font=("Inter Bold", 22 * -1)
     )
@@ -195,7 +180,7 @@ def dash():
     )
 
     canvas.create_text(
-        792.0,
+        800.0,
         129.0,
         anchor="nw",
         text=f"{len(criptografados)} Arquivos",
@@ -274,6 +259,13 @@ def dash():
 
     for row_data in tabela_de_arquivos:
         table.insert(parent="", index="end", values=row_data)
+
+
+    # Cria a barra de rolagem
+    #scrollbar = ttk.Scrollbar(window, orient="vertical", command=table.yview)
+    #scrollbar.place(x=625, y=230, height=260)
+    # Configura a tabela para usar a barra de rolagem
+    #table.configure(yscrollcommand=scrollbar.set)
 
     table.place(x=375, y=230, height=260)
 

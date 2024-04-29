@@ -4,7 +4,7 @@ import matplotlib
 from grava_resultados import atualizar_dicionario
 matplotlib.use('Qt5Agg')
 
-def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
+def grafico(encontrados_nomes, encontrados_cpf, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
         encontrados_politica, encontrados_orientacao_sexual, encontrados_doencas ,arquivo):
     
     # Cria um dicionário para armazenar a quantidade de cada tipo de dado sensível encontrado
@@ -12,7 +12,7 @@ def grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_ro
     # Atualiza o dicionário com a quantidade de cada tipo de dado sensível encontrado
     dados["Nomes"] = len(encontrados_nomes) if encontrados_nomes else 0
     dados["CPFs"] = len(encontrados_cpf) if encontrados_cpf else 0
-    dados["CNPJs"] = len(encontrados_cnpj) if encontrados_cnpj else 0
+    #dados["CNPJs"] = len(encontrados_cnpj) if encontrados_cnpj else 0
     dados["Rostos"] = 1 if encontrados_rostos else 0
     dados["Etnias"] = len(encontrados_etnias) if encontrados_etnias else 0
     dados["Religioes"] = len(encontrados_religioes) if encontrados_religioes else 0

@@ -1,6 +1,8 @@
+import time
 import os
 import customtkinter
 from tkinter import filedialog, messagebox
+import customtkinter as CTK
 from PIL import Image
 import subprocess
 from grava_resultados import inicia_dados
@@ -68,7 +70,7 @@ class App(customtkinter.CTk):
 
         # Defina o valor inicial após a criação do CTkOptionMenu
         self.scaling_optionemenu.set("100%")
-   
+
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
@@ -130,6 +132,16 @@ class App(customtkinter.CTk):
 
     def criar_dashboard(self):
         subprocess.Popen(["python", "dash_gui.py"])
+
+    #def criar_barra_de_progresso(self):
+    #    self.progressbar = CTK.CTkProgressBar(master=self, orientation='horizontal', mode='indeterminate', determinate_speed=5 ,indeterminate_speed=2, width=900, height=10)
+        #self.progressbar.set(0)
+    #    self.progressbar.grid(row=1, column=1, pady=(20, 0), padx=(20, 20), sticky="n")
+    #    self.progressbar.start()
+    
+    #def apagar_barra_de_progresso(self):
+    #   self.progressbar.grid_forget()
+
     
 if __name__ == "__main__":
     inicia_dados()
