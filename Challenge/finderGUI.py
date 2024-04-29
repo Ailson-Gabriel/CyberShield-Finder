@@ -7,6 +7,7 @@ from grava_resultados import inicia_dados
 #import appweb
 from controller import varrer_diretorio
 from print_textbox import print_to_textbox
+#from dash_gui import *
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -14,7 +15,6 @@ customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard),
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-
         # configure window
         self.title("CyberShield Finder")
         self.geometry(f"{1100}x{580}")
@@ -42,7 +42,7 @@ class App(customtkinter.CTk):
         self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, text="Iniciar varredura", command=self.iniciar_varredura)
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
 
-        self.botao_dashboard = customtkinter.CTkButton(self.sidebar_frame, text="Criar Dashboard Web", command=self.criar_dashboard)
+        self.botao_dashboard = customtkinter.CTkButton(self.sidebar_frame, text="Criar Dashboard", command=self.criar_dashboard)
         self.botao_dashboard.grid(row=3, column=0, padx=20, pady=10)
         self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
 
@@ -98,8 +98,6 @@ class App(customtkinter.CTk):
             messagebox.showerror("Erro", "Por favor, selecione um diretório antes de iniciar a varredura.")
             return
         self.limpar_textbox()
-        # Chame a função varrer_diretorio do main.py
-        inicia_dados()
         varrer_diretorio(self.entry.get(), self.textbox)
         self.entry.delete(0, 'end')  # Clear the current entry
         self.botao_dashboard.grid()
@@ -131,16 +129,9 @@ class App(customtkinter.CTk):
         imagem.show()
 
     def criar_dashboard(self):
-        # Lista todos os arquivos no diretório 'graficos' que começam com 'grafico_' e terminam com '.png'
-        #graficos = [os.path.join('graficos', nome) for nome in os.listdir('graficos') if nome.startswith('grafico_') and nome.endswith('.png')]
-
-        # Cria e executa o dashboard
-        #dashboard = Dashboard(graficos)
-        #dashboard.mainloop()
-        print_to_textbox(self.textbox,"CRIAR DASHBOARD WEB")
-        subprocess.Popen(["python", "appweb.py"])
-        #appweb.app.run(debug=True, port=8080)
+        subprocess.Popen(["python", "dash_gui.py"])
     
 if __name__ == "__main__":
+    inicia_dados()
     app = App()
     app.mainloop()

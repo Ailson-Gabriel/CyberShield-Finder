@@ -51,3 +51,5 @@ def criptografar_arquivo_caminho(caminho_arquivo):
     criptografar_arquivo(chave_carregada, caminho_arquivo, nome_arquivo_criptografado)
     os.remove(caminho_arquivo)
     
+
+    

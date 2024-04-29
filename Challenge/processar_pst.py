@@ -1,21 +1,63 @@
 import os
-import subprocess
-from email import policy
-from email.parser import BytesParser
+from pypff import file
+import pypff
 from varredura import varredura
 from criptografar_arquivo import criptografar_arquivo_caminho
 import tkinter as tk
 from print_textbox import print_to_textbox
 
 def processar(arquivo, textbox):
-    output_dir = os.path.dirname(os.path.abspath(arquivo))
-    pst_to_eml(arquivo, output_dir)
+    """
+    Processa um arquivo PST, procurando por nomes e CPFs.
+    Argumentos:
+        arquivo_pst (str): O caminho para o arquivo PST a ser processado.
+    """
+    print_to_textbox(textbox, f"Processando PST: {os.path.basename(arquivo)}")
+    try:
+        pst_file = file.open(arquivo)
+        pst_file.close()
+        print_to_textbox(textbox, f"O arquivo {os.path.basename(arquivo)} não está protegido por senha.")
+        criptografar_arquivo_caminho(arquivo)
+        print_to_textbox(textbox, f"\nArquivo {os.path.basename(arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(arquivo+'.criptografado')}")
+    except Exception as e:
+        print_to_textbox(textbox, f"O arquivo {os.path.basename(arquivo)} está protegido por senha.")
 
-    for eml_file in os.listdir(output_dir):
-        if eml_file.endswith(".eml"):
-            with open(eml_file, "rb") as f:
-                msg = BytesParser(policy=policy.default).parse(f)
-                # Agora você pode acessar o conteúdo do email com `msg`
 
-def pst_to_eml(pst_file, output_dir):
-    subprocess.run(["readpst", "-o", output_dir, "-e", "-h", pst_file])
+def extrair_texto(arquivo):
+    """
+    Extrai texto de um arquivo PST.
+ 
+    Argumento:
+        arquivo (str): O caminho para o arquivo PST a ser processado.
+ 
+    Retorna:
+        str: O texto extraído do arquivo PST.
+    """
+    pst_file = pypff.file()  # Correção: usar PSTFile de libpff-python
+    pst_file.open(arquivo)
+    textos = []
+    
+    # Iterar sobre as pastas
+    for folder in pst_file.root_folder.sub_folders:
+        for message in folder.sub_messages:
+            if message.message_class == "IPM.Note":
+                # Extrair o corpo da mensagem
+                try:
+                    # Code to handle the AttributeError
+                    pass
+                except AttributeError:
+                    body = ""  # Lidar com mensagens sem corpo de texto simples
+                textos.append(body)
+
+                # Extrair e salvar anexos
+                for attachment in message.attachments:
+                    filename = attachment.long_filename
+
+                    # Cria um novo diretório para os anexos
+                    anexos_dir = os.path.join(os.path.dirname(arquivo), f"{os.path.basename(arquivo)}_anexos")
+                    os.makedirs(anexos_dir, exist_ok=True)
+
+                    # Salvar o anexo no novo diretório
+                    with open(os.path.join(anexos_dir, filename), "wb") as f:
+                        f.write(attachment.read_stream())
+    return textos

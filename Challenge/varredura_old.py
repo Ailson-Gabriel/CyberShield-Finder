@@ -3,7 +3,6 @@ import os
 from graficos import grafico
 from print_textbox import print_to_textbox
 from buscar import encontrar_dados_sensiveis, encontrar_cpf, encontrar_cnpj
-from grava_resultados import grava_lista_em_arquivo
 
 def varredura(textbox, texto, arquivo):
     '''
@@ -13,13 +12,12 @@ def varredura(textbox, texto, arquivo):
             texto: Texto extraido do arquivo
             arquivo: Nome do arquivo
         Returns:
-            True: Se encontrar dados sensiveis que possa ser associados a algum individuo
-            False: Se não encontrar dados sensiveis que possa ser associados a algum individuo
+            True: Se encontrar individuos
+            False: Se não encontrar individuos
     '''
     print_to_textbox(textbox, "INICIANDO VARREDURA")
-    check = busca_por_individuos(textbox, texto, arquivo)
-    grava_lista_em_arquivo(os.path.basename(arquivo), check)
-    return check
+
+    return busca_por_individuos(textbox, texto, arquivo)
     
 def reconhecimento_facial(textbox, caminho_imagem):
     """
@@ -38,7 +36,7 @@ def reconhecimento_facial(textbox, caminho_imagem):
 
     # Verifica se a imagem foi carregada corretamente
     if imagem is None:
-        print_to_textbox(textbox, f"\tErro: Não foi possível carregar a imagem.")
+        print_to_textbox(textbox, f"Erro: Não foi possível carregar a imagem.")
         return False
 
     imagem_cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY) # Converte a imagem para escala de cinza
@@ -48,10 +46,10 @@ def reconhecimento_facial(textbox, caminho_imagem):
 
     # Retorna True se pelo menos um rosto for detectado
     if len(faces) > 0:
-        print_to_textbox(textbox, f"\tROSTO detectado no arquivo {os.path.basename(caminho_imagem)}")
+        print_to_textbox(textbox, f"\nRosto detectado no arquivo {os.path.basename(caminho_imagem)}")
         return True
     else:
-        print_to_textbox(textbox, f"\tNenhum ROSTO detectado no arquivo {os.path.basename(caminho_imagem)}")
+        print_to_textbox(textbox, f"Nenhum rosto detectado no arquivo {os.path.basename(caminho_imagem)}")
         return False
 
 def busca_por_individuos(textbox, texto, arquivo):
@@ -94,9 +92,9 @@ def busca_por_individuos(textbox, texto, arquivo):
         if busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf, 
                                      encontrados_cnpj, encontrados_rostos, arquivo) or encontrados_rostos:
             return True
-    else:
-        print_to_textbox(textbox, f"\nNão foram encontrados individuos que possam ser associados a dados sensíveis")
-        return False
+        else:
+            print_to_textbox(textbox, f"\nNão foram encontrados individuos que possam ser associados a dados sensíveis")
+            return False
         
 def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, arquivo):
     
@@ -135,21 +133,10 @@ def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf
     else:
         print_to_textbox(textbox, f"\tNão encontrada Orientação sexual no arquivo")
 
-    print_to_textbox(textbox, "BUSCANDO POR DOENÇAS")
-    encontrados_doencas = encontrar_dados_sensiveis(texto, "doencas")
-    if encontrados_doencas:
-        print_to_textbox(textbox, f"\tDoenças encontradas no arquivo")
-    else:
-        print_to_textbox(textbox, f"\tNão encontrada Doenças no arquivo")
-
     if (encontrados_etnias or encontrados_religioes or encontrados_genero or 
-        encontrados_politica or encontrados_orientacao_sexual or encontrados_doencas or encontrados_rostos):
-
+        encontrados_politica or encontrados_orientacao_sexual):
         grafico(encontrados_nomes, encontrados_cpf, encontrados_cnpj, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
-        encontrados_politica, encontrados_orientacao_sexual, encontrados_doencas, arquivo)
-        
-        
+        encontrados_politica, encontrados_orientacao_sexual, arquivo)
         return True
     else:
-        print_to_textbox(textbox, f"\nNão foram encontrados dados sensíveis que possam ser associados a algum individuo")
         return False
