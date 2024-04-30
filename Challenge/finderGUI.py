@@ -6,10 +6,8 @@ import customtkinter as CTK
 from PIL import Image
 import subprocess
 from grava_resultados import inicia_dados
-#import appweb
 from controller import varrer_diretorio
 from print_textbox import print_to_textbox
-#from dash_gui import *
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"

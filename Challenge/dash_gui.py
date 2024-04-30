@@ -31,12 +31,12 @@ def dash():
     window = Tk()
 
     window.geometry("1000x550")
-    window.configure(bg = "#1D2A56")
+    window.configure(bg = "#1A1A1A")
 
 
     canvas = Canvas(
         window,
-        bg = "#1D2A56",
+        bg = "#1A1A1A",
         height = 550,
         width = 1000,
         bd = 0,
@@ -206,9 +206,9 @@ def dash():
         image=image_image_11
     )
 
-    fig_1 = Figure(figsize=(2.5, 2.2), facecolor='#807FB3')
+    fig_1 = Figure(figsize=(2.5, 2.2), facecolor='#15375C')
     ax_1 = fig_1.add_subplot()
-    ax_1.set_facecolor('#807FB3')
+    ax_1.set_facecolor('#15375C')
     #ax_1.fill_between(x=dados_sensiveis_encontrados.keys(), y1=dados_sensiveis_encontrados.values(), color='#807FB3')
     #ax_1.fill_between(x=dados_sensiveis_encontrados.keys(), y1=dados_sensiveis_encontrados.values(), alpha=0.7)
     ax_1.fill_between(x=list(dados_sensiveis_encontrados.keys()), y1=list(dados_sensiveis_encontrados.values()), alpha=0.7)
@@ -223,9 +223,9 @@ def dash():
 
 
     # Segundo gráfico (horizontal)
-    fig_2 = Figure(figsize=(2.5, 2.2), facecolor='#807FB3')
+    fig_2 = Figure(figsize=(2.5, 2.2), facecolor='#15375C')
     ax_2 = fig_2.add_subplot()
-    ax_2.set_facecolor('#807FB3')
+    ax_2.set_facecolor('#15375C')
 
     categorias = list(quantidade_por_tipo.keys())
     valores = list(quantidade_por_tipo.values())
@@ -271,8 +271,8 @@ def dash():
 
     style = ttk.Style()
     style.theme_use("default")
-    style.configure("Treeview", background="#454E9C", fieldbackground="#454E9C", foreground="white")
-    style.configure("Treeview.Heading", background="#454E9C", fieldbackground="#454E9C", foreground="white")
+    style.configure("Treeview", background="#23518D", fieldbackground="#23518D", foreground="white")
+    style.configure("Treeview.Heading", background="#23518D", fieldbackground="#23518D", foreground="white")
     style.map("Treeview", background=[('selected', '#A1A6F9')])
     style.configure("Treeview", font=("Inter", 8))
 

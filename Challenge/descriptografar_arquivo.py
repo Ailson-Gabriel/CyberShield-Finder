@@ -40,6 +40,24 @@ def descriptografar_arquivos_em_diretorio(diretorio):
                 os.remove(caminho_arquivo_criptografado)
                 os.remove(caminho_arquivo_chave)
 
+def descriptografar_arquivo_por_caminho(caminho_arquivo, caminho_chave):
+    # Verifica se o arquivo existe
+    if os.path.exists(caminho_arquivo):
+        # Verifica se o arquivo é um arquivo criptografado
+        if caminho_arquivo.endswith('.criptografado'):
+            # Verifica se o arquivo da chave existe
+            if os.path.exists(caminho_chave):
+                # Descriptografa o arquivo
+                descriptografar_arquivo(caminho_chave, caminho_arquivo, caminho_arquivo[:-len('.criptografado')])
+                return True
+            else:
+                print('Arquivo de chave não encontrado.')
+        else:
+            print('O arquivo não é um arquivo criptografado.')
+    else:
+        print('Arquivo não encontrado.')
+    return False
+
 if __name__ == "__main__":
     #diretorio = input(r"Por favor, insira o caminho do diretório: ")
     janela = customtkinter.CTk()  # janela principal
