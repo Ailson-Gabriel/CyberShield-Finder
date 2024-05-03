@@ -1,8 +1,9 @@
 import cv2
 import os
+import sys
 from graficos import grafico
 from print_textbox import print_to_textbox
-from buscar import encontrar_dados_sensiveis, encontrar_cpf, encontrar_cnpj
+from buscar import encontrar_dados_sensiveis, encontrar_cpf
 from grava_resultados import grava_lista_em_arquivo
 
 def varredura(textbox, texto, arquivo):
@@ -31,8 +32,10 @@ def reconhecimento_facial(textbox, caminho_imagem):
         bool: True ou False se encontrou ou não.
     """
     print_to_textbox(textbox, f"BUSCANDO ROSTOS")
+
     # Carrega o classificador pré-treinado para detecção de faces
-    classificador_face = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    #classificador_face = cv2.CascadeClassifier(os.path.join(caminho_base, 'haarcascade_frontalface_default.xml'))
+    classificador_face = cv2.CascadeClassifier('assets\\haarcascade_frontalface_default.xml')
 
     imagem = cv2.imread(caminho_imagem) # Carrega a imagem
 
@@ -40,11 +43,17 @@ def reconhecimento_facial(textbox, caminho_imagem):
     if imagem is None:
         print_to_textbox(textbox, f"\tErro: Não foi possível carregar a imagem.")
         return False
-
-    imagem_cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY) # Converte a imagem para escala de cinza
-
+    
+    try:
+        imagem_cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
+    except Exception as e:
+        print_to_textbox(textbox, f"Erro na conversão para escala de cinza: {e}")
+    
     # Detecta rostos na imagem
-    faces = classificador_face.detectMultiScale(imagem_cinza, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    try:
+        faces = classificador_face.detectMultiScale(imagem_cinza, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    except Exception as e:
+        print_to_textbox(textbox, f"Erro em detectMultiScale: {e}")
 
     # Retorna True se pelo menos um rosto for detectado
     if len(faces) > 0:
@@ -146,8 +155,7 @@ def busca_por_dados_sensiveis(textbox, texto, encontrados_nomes, encontrados_cpf
 
         grafico(encontrados_nomes, encontrados_cpf, encontrados_rostos, encontrados_etnias, encontrados_religioes, encontrados_genero, 
         encontrados_politica, encontrados_orientacao_sexual, encontrados_doencas, arquivo)
-        
-        
+
         return True
     else:
         print_to_textbox(textbox, f"\nNão foram encontrados dados sensíveis que possam ser associados a algum individuo")

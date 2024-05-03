@@ -30,7 +30,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
 
         # load logo image
-        self.logo_image = customtkinter.CTkImage(Image.open("CyberShieldLOGO.png"), size=(200, 200))
+        self.logo_image = customtkinter.CTkImage(Image.open("assets\\CyberShieldLOGO.png"), size=(200, 200))
 
         # create logo label with image
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, image=self.logo_image, text="Finder" ,compound="top", font=customtkinter.CTkFont(size=30, weight="bold"))
@@ -98,6 +98,7 @@ class App(customtkinter.CTk):
             messagebox.showerror("Erro", "Por favor, selecione um diretório antes de iniciar a varredura.")
             return
         self.limpar_textbox()
+        inicia_dados()
         varrer_diretorio(self.entry.get(), self.textbox)
         self.entry.delete(0, 'end')  # Clear the current entry
         self.botao_dashboard.grid()
@@ -129,7 +130,9 @@ class App(customtkinter.CTk):
         imagem.show()
 
     def criar_dashboard(self):
-        subprocess.Popen(["python", "dash_gui.py"])
+        os.system("FinderDash.exe")
+        #subprocess.Popen(["FinderDash.exe"])
+        #subprocess.Popen(["python", "dash_gui.py"])
 
     #def criar_barra_de_progresso(self):
     #    self.progressbar = CTK.CTkProgressBar(master=self, orientation='horizontal', mode='indeterminate', determinate_speed=5 ,indeterminate_speed=2, width=900, height=10)
@@ -142,6 +145,5 @@ class App(customtkinter.CTk):
 
     
 if __name__ == "__main__":
-    inicia_dados()
     app = App()
     app.mainloop()
