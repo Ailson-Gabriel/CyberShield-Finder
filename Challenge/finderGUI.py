@@ -130,8 +130,8 @@ class App(customtkinter.CTk):
         imagem.show()
 
     def criar_dashboard(self):
-        os.system("FinderDash.exe")
-        #subprocess.Popen(["FinderDash.exe"])
+        #os.system("FinderDash.exe")
+        subprocess.Popen(["FinderDash.exe"], shell=True)
         #subprocess.Popen(["python", "dash_gui.py"])
 
     #def criar_barra_de_progresso(self):

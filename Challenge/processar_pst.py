@@ -1,9 +1,7 @@
 import os
 from pypff import file
 import pypff
-from varredura import varredura
 from criptografar_arquivo import criptografar_arquivo_caminho
-import tkinter as tk
 from print_textbox import print_to_textbox
 
 def processar(arquivo, textbox):

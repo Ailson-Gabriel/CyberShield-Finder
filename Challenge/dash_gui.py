@@ -3,17 +3,12 @@
 
 from pathlib import Path
 import ast
-import re
-# from tkinter import *
-# Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk
+import sys
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk, messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.ticker import MaxNLocator
-from grava_resultados import load_data_from_txt
 import numpy as np
-import json
-#global image_image_1, image_image_2, image_image_3, image_image_4, image_image_5, image_image_6, image_image_7, image_image_8, image_image_9, image_image_10, image_image_11
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"assets\\frame0")
@@ -28,6 +23,10 @@ def dash():
     criptografados = load_data_from_txt('db\\base.txt', 'criptografados')
     qntd_total = load_data_from_txt('db\\base.txt', 'qntd_total')
     tabela_de_arquivos = load_data_from_txt('db\\base.txt', 'tabela_de_arquivos')
+
+    if not dados_sensiveis_encontrados or not quantidade_por_tipo or not criptografados or not qntd_total or not tabela_de_arquivos:
+        messagebox.showerror("Erro", "Um ou mais conjuntos de dados estão vazios ou não foram encontrados. Por favor, execute a varredura novamente.")
+        sys.exit(1)
     window = Tk()
 
     window.geometry("1000x550")
@@ -59,7 +58,7 @@ def dash():
         17.0,
         anchor="nw",
         text="Finder DashBoard",
-        fill="#000000",
+        fill="#FFFFFF",
         font=("Inter Bold", 30 * -1)
     )
     #global image_image_2
@@ -279,6 +278,14 @@ def dash():
     window.title("CyberShield Finder Dashboard")
     window.resizable(False, False)
     window.mainloop()
+
+def load_data_from_txt(caminho_arquivo, nome_variavel):
+  with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
+    for linha in arquivo:
+      if linha.startswith(nome_variavel + ' ='):
+        valor = ast.literal_eval(linha.partition('=')[2])
+        return valor
+  return None  # Retorna None se a variável não for encontrada
 
 if __name__ == "__main__":
     dash()
