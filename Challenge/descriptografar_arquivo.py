@@ -1,8 +1,8 @@
-import os
-from cryptography.fernet import Fernet
-import tkinter as tk
-from tkinter import filedialog
-import customtkinter
+import os # Módulo que fornece funções para interagir com o sistema operacional
+from cryptography.fernet import Fernet # Módulo para criptografia de arquivos
+import tkinter as tk # Módulo para criar interfaces gráficas
+from tkinter import filedialog # Módulo que fornece caixas de diálogo para abrir e salvar arquivos
+import customtkinter # Biblioteca para criar interfaces gráficas
 
 # Função para descriptografar um arquivo criptografado
 def descriptografar_arquivo(caminho_arquivo_chave, nome_arquivo_criptografado, nome_arquivo_descriptografado):

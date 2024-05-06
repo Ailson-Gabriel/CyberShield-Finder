@@ -1,8 +1,7 @@
-import os
-from varredura import varredura
-from criptografar_arquivo import criptografar_arquivo_caminho
-import tkinter as tk
-from print_textbox import print_to_textbox
+import os # Módulo que fornece funções para interagir com o sistema operacional
+from varredura import varredura # Função que realiza a varredura do texto extraido do arquivo em busca de nomes, CPFs, Etnias e Religiões
+from criptografar_arquivo import criptografar_arquivo_caminho # Função que criptografa um arquivo
+from print_textbox import print_to_textbox # Função que imprime mensagens em um Textbox
 
 def processar(arquivo, textbox):
     """
@@ -13,11 +12,11 @@ def processar(arquivo, textbox):
     """
 
     print_to_textbox(textbox, f"Processando TXT: {os.path.basename(arquivo)}",)
-    texto_txt = extrair_texto(arquivo) 
+    texto_txt = extrair_texto(arquivo) # Extrai o texto do arquivo TXT
 
     dados_sensiveis_encontrados = varredura(textbox, texto_txt, arquivo) # Verifica se há dados sensíveis no texto extraído do arquivo Excel
     if dados_sensiveis_encontrados:
-        criptografar_arquivo_caminho(arquivo)
+        criptografar_arquivo_caminho(arquivo) # Criptografa o arquivo se houver dados sensíveis
         print_to_textbox(textbox, f"\nArquivo {os.path.basename(arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(arquivo+'.criptografado')}")
 
 def extrair_texto(arquivo):
@@ -30,6 +29,8 @@ def extrair_texto(arquivo):
     Retorna:
         str: O texto extraído do arquivo TXT.
     """
+
+    # Abre o arquivo em modo de leitura
     with open(arquivo, 'r') as file:
         texto = file.read() # Lê o conteúdo do arquivo
-    return texto
+    return texto # Retorna o texto extraído do arquivo

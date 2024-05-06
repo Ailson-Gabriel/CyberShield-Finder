@@ -1,5 +1,5 @@
-import os
-from cryptography.fernet import Fernet
+import os # Módulo que fornece funções para interagir com o sistema operacional
+from cryptography.fernet import Fernet # Módulo para criptografia de arquivos
 
 # Função para gerar uma chave de criptografia usando Fernet
 def gerar_chave():

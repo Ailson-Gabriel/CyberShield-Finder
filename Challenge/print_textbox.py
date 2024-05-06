@@ -1,11 +1,11 @@
 def print_to_textbox(textbox, message):
     '''
-    Print a message to the textbox.
+    Imprime mensagem no textbox
         args:
-            textbox: The textbox to print the message to.
-            message: The message to print.
+            textbox: Objeto Textbox onde será impresso o resultado da varredura
+            message: A mensagem a ser impressa
     '''
-    textbox.configure(state='normal')
-    textbox.insert("end", message + "\n")
-    textbox.configure(state='disabled')
-    textbox.update_idletasks()
+    textbox.configure(state='normal') # Habilita a edição do Textbox
+    textbox.insert("end", message + "\n") # Insere a mensagem no final do Textbox
+    textbox.configure(state='disabled') # Desabilita a edição do Textbox
+    textbox.update_idletasks() # Atualiza o Textbox

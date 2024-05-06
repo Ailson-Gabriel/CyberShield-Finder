@@ -1,7 +1,6 @@
-import re
-from ler_arquivo_txt import ler_arquivo_txt
-from valida_cpf import valida_cpf
-from valida_cnpj import valida_cnpj
+import re # Importa o módulo re (regular expressions) para trabalhar com expressões regulares
+from ler_arquivo_txt import ler_arquivo_txt # Importa a função ler_arquivo_txt do módulo ler_arquivo_txt
+from valida_cpf import valida_cpf # Importa a função valida_cpf do módulo valida_cpf
 
 def encontrar_dados_sensiveis(texto, contexto):
     """
@@ -17,11 +16,11 @@ def encontrar_dados_sensiveis(texto, contexto):
 
     caminho_txt = f"wordlists\{contexto}.txt" # Caminho para o arquivo de texto com os dados que podem ser sensíveis
     lista = ler_arquivo_txt(caminho_txt) # Cria uma lista com os dados do arquivo
-    encontrados = []
-    for elemento in lista:
-        if re.search(r'\b' + re.escape(elemento) + r'\b', texto, re.IGNORECASE):
-            if elemento not in encontrados:    
-                encontrados.append(elemento)
+    encontrados = [] # Cria uma lista vazia para armazenar os dados sensíveis encontrados
+    for elemento in lista: # Repete para cada elemento na lista
+        if re.search(r'\b' + re.escape(elemento) + r'\b', texto, re.IGNORECASE): # Verifica se o elemento está presente no texto
+            if elemento not in encontrados: # Verifica se o elemento já foi encontrado
+                encontrados.append(elemento) # Adiciona o elemento à lista de dados sensíveis encontrados
     return encontrados
 
 def encontrar_cpf(texto):
@@ -34,39 +33,14 @@ def encontrar_cpf(texto):
         list: Lista de CPFs encontrados.
     """
     
-    cpfs_validos = []
-
-    cpfs_potenciais = re.findall(r'\b(?:\d{3}\.){2}\d{3}-\d{2}|\b\d{11}\b', texto)
+    cpfs_validos = [] # Cria uma lista vazia para armazenar os CPFs válidos
     # Encontra todos os conjuntos de 11 números ou CPFs formatados corretamente usando expressão regular
-
-    # Valida cada CPF potencial
-    for cpf in cpfs_potenciais:
-        if valida_cpf(cpf):  # Chama a função valida_cpf para validar o CPF
-            if cpf not in cpfs_validos:
-                cpfs_validos.append(cpf)  # Adiciona o CPF válido à lista de CPFs válidos
-                #print(f"CPF válido encontrado: {cpf}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
-    return cpfs_validos
-
-def encontrar_cnpj(texto):
-    """
-    Encontra CNPJs em um texto.
-    Argumento:
-        texto (str): O texto no qual procurar CNPJs.
-
-    Retorna:
-        list: Lista de CNPJs encontrados.
-    """
+    cpfs_potenciais = re.findall(r'\b(?:\d{3}\.){2}\d{3}-\d{2}|\b\d{11}\b', texto) 
     
-    cnpjs_validos = []
-
-    # Encontra todos os conjuntos de 14 números ou CNPJs formatados corretamente usando expressão regular
-    cnpjs_potenciais = re.findall(r'(?<!\d)(?:\d{1,2}\.)?\d{3}\.\d{3}/\d{4}-\d{2}(?!\d)|\b\d{14}\b', texto)
-
-    # Valida cada CNPJ potencial
-    for cnpj in cnpjs_potenciais:
-        if valida_cnpj(cnpj):  # Chama a função valida_cnpj para validar o CNPJ
-            if cnpj not in cnpjs_validos:
-                cnpjs_validos.append(cnpj)  # Adiciona o CNPJ válido à lista de CNPJs válidos
-                #print(f"CNPJ válido encontrado: {cnpj}") #REMOVER ESTA LINHA APÓS VERSÃO DE TESTES
-    return cnpjs_validos
+    # Valida cada CPF potencial
+    for cpf in cpfs_potenciais: # Repete para cada CPF potencial
+        if valida_cpf(cpf):  # Chama a função valida_cpf para validar o CPF
+            if cpf not in cpfs_validos: # Verifica se o CPF já foi encontrado
+                cpfs_validos.append(cpf)  # Adiciona o CPF válido à lista de CPFs válidos
+    return cpfs_validos
 

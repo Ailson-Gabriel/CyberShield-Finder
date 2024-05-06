@@ -1,10 +1,9 @@
-import os
-import xlrd
-import openpyxl
-from criptografar_arquivo import criptografar_arquivo_caminho
-from varredura import varredura
-import tkinter as tk
-from print_textbox import print_to_textbox
+import os # Módulo que fornece funções para interagir com o sistema operacional
+import xlrd # Módulo para ler arquivos Excel (.xls)
+import openpyxl # Módulo para ler arquivos Excel (.xlsx)
+from criptografar_arquivo import criptografar_arquivo_caminho # Função que criptografa um arquivo
+from varredura import varredura # Função que realiza a varredura do texto extraido do arquivo em busca de nomes, CPFs, Etnias e Religiões
+from print_textbox import print_to_textbox # Função que imprime mensagens em um Textbox
 
 def processar(arquivo, textbox):
     """
@@ -20,8 +19,8 @@ def processar(arquivo, textbox):
     texto_str = ' '.join(texto) # Transforma a lista de textos completos em uma única string
     
     dados_sensiveis_encontrados = varredura(textbox, texto_str, arquivo) # Verifica se há dados sensíveis no texto extraído do arquivo Excel
-    if dados_sensiveis_encontrados:
-        criptografar_arquivo_caminho(arquivo)
+    if dados_sensiveis_encontrados: # Se houver dados sensíveis
+        criptografar_arquivo_caminho(arquivo) # Criptografa o arquivo
         print_to_textbox(textbox, f"\nArquivo {os.path.basename(arquivo)} foi criptografado com sucesso e salvo como {os.path.basename(arquivo+'.criptografado')}")
 
 def extrair_texto(arquivo):
@@ -35,7 +34,6 @@ def extrair_texto(arquivo):
         list: Lista de textos extraídos do arquivo Excel.
     """
     textos = []  # Inicializa a lista para armazenar os textos do arquivo Excel
-
     if arquivo.endswith('.xls'):  # Para arquivos .xls
         workbook = xlrd.open_workbook(arquivo)  # Abre o arquivo Excel usando a biblioteca xlrd
         for sheet in workbook.sheets():  # Repete para as planilhas no arquivo Excel
