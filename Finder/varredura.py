@@ -9,7 +9,7 @@ def varredura(textbox, texto, arquivo):
     '''
     Função que realiza a varredura do texto extraido do arquivo em busca de nomes, CPFs, CNPJs, Etnias e Religiões
         Args:  
-            textbox: Objeto Textbox onde será impresso o resultado da varredura
+            textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
             texto: Texto extraido do arquivo
             arquivo: Nome do arquivo
         Returns:

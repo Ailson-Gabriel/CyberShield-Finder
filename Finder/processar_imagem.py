@@ -11,6 +11,7 @@ def processar(arquivo, textbox):
 
     Parâmetros:
         arquivo (str): O caminho para o arquivo de imagem a ser processado.
+        textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
     """
 
     print_to_textbox(textbox, f"Processando imagem: {os.path.basename(arquivo)}")

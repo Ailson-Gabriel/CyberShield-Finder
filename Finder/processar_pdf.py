@@ -10,7 +10,7 @@ def processar(arquivo, textbox):
 
     Argumentos:
         arquivo (str): O caminho para o arquivo PDF a ser processado.
-        nomes (list): Lista de nomes para procurar no PDF.
+        textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
     """
 
     print_to_textbox(textbox, f"Processando PDF: {os.path.basename(arquivo)}",)

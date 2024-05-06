@@ -11,6 +11,7 @@ def processar(arquivo, textbox):
 
     Argumento:
         arquivo (str): O caminho para o arquivo .xls ou .xlsx a ser processado.
+        textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
     """
 
     print_to_textbox(textbox, f"Processando Excel: {os.path.basename(arquivo)}",)

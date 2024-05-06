@@ -7,7 +7,8 @@ def processar(arquivo, textbox):
     """
     Processa um arquivo PST, procurando por nomes e CPFs.
     Argumentos:
-        arquivo_pst (str): O caminho para o arquivo PST a ser processado.
+        arquivo (str): O caminho para o arquivo PST a ser processado.
+        textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
     """
 
     print_to_textbox(textbox, f"Processando PST: {os.path.basename(arquivo)}")

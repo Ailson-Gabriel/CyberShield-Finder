@@ -13,7 +13,7 @@ def varrer_diretorio(diretorio, textbox):
     Varre um diretório em busca de arquivos e processa cada arquivo encontrado.
     Argumentos:
         diretorio (str): O caminho para o diretório a ser varrido.
-        textbox (Tkinter.Text): O objeto Textbox onde as mensagens devem ser exibidas.
+        textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
     """
     print_to_textbox(textbox, f"Varrendo o diretório: {os.path.basename(diretorio)}")
     # Lista para armazenar os arquivos varridos

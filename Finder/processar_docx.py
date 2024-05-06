@@ -10,6 +10,7 @@ def processar(arquivo, textbox):
 
     Argumento:
         arquivo (str): O caminho para o arquivo .docx a ser processado.
+        textbox (CTkTextbox): O objeto CTkTextbox onde as mensagens devem ser exibidas.
     """
     
     print_to_textbox(textbox, f"Processando DOCX: {os.path.basename(arquivo)}",)    
