@@ -78,7 +78,7 @@ def dash(): # Função para criar o dashboard
         108.0,
         107.0,
         anchor="nw",
-        text="Dados Sensíveis Encontrados\n",
+        text="Dados Encontrados\n",
         fill="#FFFFFF",
         font=("Inter Bold", 10 * -1)
     )
