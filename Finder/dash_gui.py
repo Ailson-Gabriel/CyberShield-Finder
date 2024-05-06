@@ -75,7 +75,7 @@ def dash(): # Função para criar o dashboard
     )
 
     canvas.create_text(
-        108.0,
+        130.0,
         107.0,
         anchor="nw",
         text="Dados Encontrados\n",
