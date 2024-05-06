@@ -7,7 +7,7 @@ from grava_resultados import inicia_dados # Função que inicializa o dicionári
 from controller import varrer_diretorio # Função que varre um diretório em busca de arquivos
 from print_textbox import print_to_textbox # Função que imprime mensagens em um Textbox
 
-customtkinter.set_appearance_mode("System")  # Modos: "System" (Padrão), "Dark", "Light"
+customtkinter.set_appearance_mode("Dark")  # Modos: "System", "Dark"  (Padrão), "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Temas: "blue" (Padrão), "green", "dark-blue"
 
 class App(customtkinter.CTk): # Classe principal da aplicação
@@ -15,7 +15,7 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         super().__init__() # Chama o método construtor da classe pai
         # Configurações da janela principal
         self.title("CyberShield Finder")
-        self.geometry(f"{1100}x{580}")
+        self.geometry(f"{1100}x{550}")
 
         # Configuração do layout da janela principal
         self.grid_columnconfigure(1, weight=1)
@@ -58,7 +58,7 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         # Cria um botão para alterar o modo de aparência
         self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Appearance Mode:", anchor="w")
         self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
-        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["System", "Light", "Dark"],
+        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["Dark", "Light"],
                                                                        command=self.change_appearance_mode_event)
         self.appearance_mode_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 10))
 
@@ -74,10 +74,12 @@ class App(customtkinter.CTk): # Classe principal da aplicação
 
     def change_appearance_mode_event(self, new_appearance_mode: str): # Método para alterar o modo de aparência
         customtkinter.set_appearance_mode(new_appearance_mode) # Altera o modo de aparência
+        self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
 
     def change_scaling_event(self, new_scaling: str): # Método para alterar a escalabilidade da interface
         new_scaling_float = int(new_scaling.replace("%", "")) / 100 # Converte a string para um valor flutuante
         customtkinter.set_widget_scaling(new_scaling_float) # Altera a escalabilidade da interface
+        self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
 
     def selecionar_diretorio(self):
         directory = filedialog.askdirectory()
