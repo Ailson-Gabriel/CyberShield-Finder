@@ -7,8 +7,8 @@ from grava_resultados import inicia_dados # Função que inicializa o dicionári
 from controller import varrer_diretorio # Função que varre um diretório em busca de arquivos
 from print_textbox import print_to_textbox # Função que imprime mensagens em um Textbox
 
-customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_appearance_mode("System")  # Modos: "System" (Padrão), "Dark", "Light"
+customtkinter.set_default_color_theme("dark-blue")  # Temas: "blue" (Padrão), "green", "dark-blue"
 
 class App(customtkinter.CTk): # Classe principal da aplicação
     def __init__(self): # Método construtor
