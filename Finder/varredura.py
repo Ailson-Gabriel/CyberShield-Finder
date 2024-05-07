@@ -1,9 +1,12 @@
 import cv2 # OpenCV - Biblioteca de visão computacional e processamento de imagens e vídeos.
 import os # Módulo que fornece funções para interagir com o sistema operacional.
+import tkinter as tk # Módulo que fornece funções para criar interfaces gráficas.
+from tkinter import messagebox # Módulo que fornece caixas de diálogo para exibir mensagens.
 from graficos import grafico # Função que gera gráficos
 from print_textbox import print_to_textbox # Função que imprime mensagens em um Textbox
 from buscar import encontrar_dados_sensiveis, encontrar_cpf # Função que busca por dados sensiveis
 from grava_resultados import grava_lista_em_arquivo # Função que grava os resultados em um arquivo
+
 
 def varredura(textbox, texto, arquivo):
     '''
@@ -19,6 +22,11 @@ def varredura(textbox, texto, arquivo):
     print_to_textbox(textbox, "INICIANDO VARREDURA")
     check = busca_por_individuos(textbox, texto, arquivo)
     grava_lista_em_arquivo(os.path.basename(arquivo), check)
+    if not check:
+        root = tk.Tk()
+        root.withdraw() 
+        messagebox.showinfo("Varredura concluída", "Nenhum dado sensível que possa ser associado encontrado.")
+        root.destroy()
     return check
     
 def reconhecimento_facial(textbox, caminho_imagem):

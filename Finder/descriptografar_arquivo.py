@@ -1,9 +1,9 @@
 import os
 from cryptography.fernet import Fernet
 import tkinter as tk
-from tkinter import filedialog
-import customtkinter as ctk
 import tkinter
+from tkinter import filedialog, messagebox
+import customtkinter as ctk
 from PIL import Image
 
 # Função para descriptografar um arquivo criptografado
@@ -36,19 +36,23 @@ def descriptografar_arquivos_em_diretorio(diretorio):
                 os.remove(caminho_arquivo_chave)
 
 def descriptografar_arquivo_por_caminho(caminho_arquivo, caminho_chave):
+    root = tk.Tk()
+    root.withdraw()
     if os.path.exists(caminho_arquivo):
         if caminho_arquivo.endswith('.criptografado'):
             if os.path.exists(caminho_chave):
                 descriptografar_arquivo(caminho_chave, caminho_arquivo, caminho_arquivo[:-len('.criptografado')])
                 os.remove(caminho_arquivo)
                 os.remove(caminho_chave)
+                root.destroy()
                 return True
             else:
-                print('Arquivo de chave não encontrado.')
+                messagebox.showerror("Erro", "Arquivo de chave não encontrado.")
         else:
-            print('O arquivo não é um arquivo criptografado.')
+            messagebox.showerror("Erro", "O arquivo não é um arquivo criptografado.")
     else:
-        print('Arquivo não encontrado.')
+        messagebox.showerror("Erro", "Arquivo não encontrado.")
+    root.destroy()
     return False
 
 class App(ctk.CTk):
