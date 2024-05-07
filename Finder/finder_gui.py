@@ -80,7 +80,9 @@ class App(customtkinter.CTk): # Classe principal da aplicação
     def change_scaling_event(self, new_scaling: str): # Método para alterar a escalabilidade da interface
         new_scaling_float = int(new_scaling.replace("%", "")) / 100 # Converte a string para um valor flutuante
         customtkinter.set_widget_scaling(new_scaling_float) # Altera a escalabilidade da interface
-        self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
+        if new_scaling_float > 1 and (self.winfo_width() < 1100 or self.winfo_height() < 700): # Verifica se a janela é muito pequena
+            self.geometry(f"{1100}x{700}") # Aumenta o tamanho da janela
+        self.botao_dashboard.grid_remove()  # torna o botão invisível
 
     def selecionar_diretorio(self):
         directory = filedialog.askdirectory()

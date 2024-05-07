@@ -56,6 +56,7 @@ class App(ctk.CTk):
         super().__init__()
         self.title('CyberShield Finder_Decrypter')
         self.geometry('300x400')
+        self.resizable(False, False)
 
         self.caminho_pasta = None
         self.label = None
