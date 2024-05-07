@@ -131,6 +131,7 @@ class App(ctk.CTk):
         self.opcao1.pack(pady=20)
         self.opcao2.pack(pady=20)
         self.entry.delete(0, 'end')
+        self.entry_chave.delete(0, 'end')
         self.entry.pack_forget()
         self.entry_chave.pack_forget()
         if self.label2 is not None:
