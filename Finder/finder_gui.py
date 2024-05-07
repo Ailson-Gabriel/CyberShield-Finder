@@ -73,6 +73,8 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         # Defina o valor inicial após a criação do CTkOptionMenu
         self.scaling_optionemenu.set("100%")
 
+        self.varredura_feita = False  # Variavel para verificar se a varredura foi feita
+
     def change_appearance_mode_event(self, new_appearance_mode: str): # Método para alterar o modo de aparência
         customtkinter.set_appearance_mode(new_appearance_mode) # Altera o modo de aparência
         self.botao_dashboard.grid_remove()  # torna o botão inicialmente invisível
@@ -82,7 +84,8 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         customtkinter.set_widget_scaling(new_scaling_float) # Altera a escalabilidade da interface
         if new_scaling_float > 1 and (self.winfo_width() < 1100 or self.winfo_height() < 700): # Verifica se a janela é muito pequena
             self.geometry(f"{1100}x{700}") # Aumenta o tamanho da janela
-        self.botao_dashboard.grid_remove()  # torna o botão invisível
+        if not self.varredura_feita: # Verifique se a varredura foi concluída antes de remover o botão
+            self.botao_dashboard.grid_remove()  # torna o botão invisível
 
     def selecionar_diretorio(self):
         directory = filedialog.askdirectory()
@@ -107,6 +110,7 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         self.limpar_textbox() # Limpa o TextBox
         inicia_dados() # Inicializa o dicionário de resultados
         varrer_diretorio(self.entry.get(), self.textbox) # Varre o diretório em busca de arquivos
+        self.varredura_feita = True  # Variavel de controle para verificar se a varredura foi feita
         self.entry.delete(0, 'end')  # Limpa a entrada atual
         self.botao_dashboard.grid() # Torna o botão de criação do dashboard visível
         self.criar_botoes_graficos() # Cria os botões para visualizar os gráficos

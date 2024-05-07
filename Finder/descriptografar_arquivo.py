@@ -103,10 +103,12 @@ class App(ctk.CTk):
 
         self.entry = ctk.CTkEntry(self, placeholder_text="", width=220, justify=tkinter.CENTER)
         #self.entry.pack(fill=tkinter.BOTH, padx=10, pady=10)
+        self.entry.configure(state='disabled')
         self.entry.pack_forget()
 
         self.entry_chave = ctk.CTkEntry(self, placeholder_text="", width=220, justify=tkinter.CENTER)
         #self.entry_chave.pack(fill=tkinter.BOTH, padx=10, pady=10)
+        self.entry_chave.configure(state='disabled')
         self.entry_chave.pack_forget()
 
     def mostrar_botoes(self):
@@ -130,8 +132,12 @@ class App(ctk.CTk):
         self.descriptografar_botao.pack_forget()
         self.opcao1.pack(pady=20)
         self.opcao2.pack(pady=20)
+        self.entry.configure(state='normal')
+        self.entry_chave.configure(state='normal')
         self.entry.delete(0, 'end')
         self.entry_chave.delete(0, 'end')
+        self.entry.configure(state='disabled')
+        self.entry_chave.configure(state='disabled')
         self.entry.pack_forget()
         self.entry_chave.pack_forget()
         if self.label2 is not None:
@@ -141,8 +147,10 @@ class App(ctk.CTk):
 
     def abrir_caminho_pasta(self):
         self.caminho_pasta = filedialog.askdirectory()
+        self.entry.configure(state='normal')  # Habilita a edição do CTkEntry
         self.entry.delete(0, 'end')  # Limpa o valor atual do CTkEntry
         self.entry.insert(0, os.path.basename(self.caminho_pasta))  # Insere o nome do diretório no CTkEntry
+        self.entry.configure(state='disabled')  # Desabilita a edição do CTkEntry
 
     def comecar_procura(self):
         if self.caminho_pasta is not None and os.path.exists(self.caminho_pasta):
@@ -174,13 +182,17 @@ class App(ctk.CTk):
 
     def abrir_caminho_arquivo(self):
         self.caminho_arquivo = filedialog.askopenfilename()
+        self.entry.configure(state='normal')
         self.entry.delete(0, 'end')
         self.entry.insert(0, os.path.basename(self.caminho_arquivo))
+        self.entry.configure(state='disabled')
 
     def abrir_caminho_chave(self):
         self.caminho_chave = filedialog.askopenfilename()
+        self.entry_chave.configure(state='normal')
         self.entry_chave.delete(0, 'end')
         self.entry_chave.insert(0, os.path.basename(self.caminho_chave))
+        self.entry_chave.configure(state='disabled')
 
     def descriptografar_arquivo(self):
         if self.caminho_arquivo and self.caminho_chave:
