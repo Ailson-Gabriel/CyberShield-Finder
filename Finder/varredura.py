@@ -22,11 +22,6 @@ def varredura(textbox, texto, arquivo):
     print_to_textbox(textbox, "INICIANDO VARREDURA")
     check = busca_por_individuos(textbox, texto, arquivo)
     grava_lista_em_arquivo(os.path.basename(arquivo), check)
-    if not check:
-        root = tk.Tk()
-        root.withdraw() 
-        messagebox.showinfo("Varredura concluída", "Nenhum dado sensível que possa ser associado encontrado.")
-        root.destroy()
     return check
     
 def reconhecimento_facial(textbox, caminho_imagem):
