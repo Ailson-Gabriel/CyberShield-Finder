@@ -1,54 +1,47 @@
-import os # Módulo que fornece funções para interagir com o sistema operacional
-from cryptography.fernet import Fernet # Módulo para criptografia de arquivos
-import tkinter as tk # Módulo para criar interfaces gráficas
-from tkinter import filedialog # Módulo que fornece caixas de diálogo para abrir e salvar arquivos
-import customtkinter # Biblioteca para criar interfaces gráficas
+import os
+from cryptography.fernet import Fernet
+import tkinter as tk
+from tkinter import filedialog
+import customtkinter as ctk
+import tkinter
+from PIL import Image
 
 # Função para descriptografar um arquivo criptografado
 def descriptografar_arquivo(caminho_arquivo_chave, nome_arquivo_criptografado, nome_arquivo_descriptografado):
-    # Abre o arquivo criptografado no modo de leitura binária ('rb') e lê os dados criptografados
     with open(nome_arquivo_criptografado, 'rb') as arquivo:
         dados_criptografados = arquivo.read()
 
-    # Abre o arquivo da chave no modo de leitura binária ('rb') e lê a chave de criptografia
     with open(caminho_arquivo_chave, 'rb') as arquivo:
         chave = arquivo.read()
 
-    fernet = Fernet(chave) # Cria uma instância da classe Fernet usando a chave fornecida
-    dados_descriptografados = fernet.decrypt(dados_criptografados) # Descriptografa os dados criptografados usando a chave
+    fernet = Fernet(chave)
+    dados_descriptografados = fernet.decrypt(dados_criptografados)
 
-    # Abre o arquivo especificado no modo de escrita binária ('wb') e escreve os dados descriptografados
     with open(nome_arquivo_descriptografado, 'wb') as arquivo:
         arquivo.write(dados_descriptografados)
 
 # Função para descriptografar arquivos em um diretório especificado
 def descriptografar_arquivos_em_diretorio(diretorio):
-    for arquivo in os.listdir(diretorio): # Repete para os arquivos no diretório
-
-        if os.path.isdir(os.path.join(diretorio, arquivo)):  # Se for um diretório
-            descriptografar_arquivos_em_diretorio(os.path.join(diretorio, arquivo))  # Chama a função de varredura novamente para o subdiretório
+    for arquivo in os.listdir(diretorio):
+        if os.path.isdir(os.path.join(diretorio, arquivo)):
+            descriptografar_arquivos_em_diretorio(os.path.join(diretorio, arquivo))
         else:
-            if arquivo.endswith('.criptografado'): # Verifica se o arquivo tem a extensão ".criptografado"
-                caminho_arquivo_criptografado = os.path.join(diretorio, arquivo) # Obtém o caminho completo do arquivo criptografado
-                caminho_arquivo_original = caminho_arquivo_criptografado[:-len('.criptografado')] # Remove a extensão ".criptografado" para obter o caminho do arquivo original
-                caminho_arquivo_chave = caminho_arquivo_original + '_chave' # Obtém o caminho do arquivo da chave correspondente
-                
-                # Descriptografa o arquivo criptografado e salva o arquivo descriptografado
-                descriptografar_arquivo(caminho_arquivo_chave, caminho_arquivo_criptografado, caminho_arquivo_original) 
-                
-                # Remove os arquivos criptografado e de chave após a descriptografia
+            if arquivo.endswith('.criptografado'):
+                caminho_arquivo_criptografado = os.path.join(diretorio, arquivo)
+                caminho_arquivo_original = caminho_arquivo_criptografado[:-len('.criptografado')]
+                caminho_arquivo_chave = caminho_arquivo_original + '_chave'
+
+                descriptografar_arquivo(caminho_arquivo_chave, caminho_arquivo_criptografado, caminho_arquivo_original)
                 os.remove(caminho_arquivo_criptografado)
                 os.remove(caminho_arquivo_chave)
 
 def descriptografar_arquivo_por_caminho(caminho_arquivo, caminho_chave):
-    # Verifica se o arquivo existe
     if os.path.exists(caminho_arquivo):
-        # Verifica se o arquivo é um arquivo criptografado
         if caminho_arquivo.endswith('.criptografado'):
-            # Verifica se o arquivo da chave existe
             if os.path.exists(caminho_chave):
-                # Descriptografa o arquivo
                 descriptografar_arquivo(caminho_chave, caminho_arquivo, caminho_arquivo[:-len('.criptografado')])
+                os.remove(caminho_arquivo)
+                os.remove(caminho_chave)
                 return True
             else:
                 print('Arquivo de chave não encontrado.')
@@ -58,53 +51,139 @@ def descriptografar_arquivo_por_caminho(caminho_arquivo, caminho_chave):
         print('Arquivo não encontrado.')
     return False
 
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+        self.title('CyberShield Finder_Decrypter')
+        self.geometry('300x400')
+
+        self.caminho_pasta = None
+        self.label = None
+        self.label2 = None
+        self.label3 = None
+        self.caminho_arquivo = None
+        self.caminho_chave = None
+
+        # Carrega a imagem do logo
+        self.logo_image = ctk.CTkImage(Image.open("assets\\descriptografia.ico"), size=(200, 200))
+        # Cria um label com a imagem do logo e adiciona à interface gráfica
+        self.logo_label = ctk.CTkLabel(self, image=self.logo_image, text="Finder Decrypter", compound="top", font=ctk.CTkFont(size=20, weight="bold"))
+        self.logo_label.pack()
+
+        self.opcao1 = ctk.CTkButton(self, text='Diretório', command=self.mostrar_botoes)
+        self.opcao1.pack(pady=20)
+
+        self.opcao2 = ctk.CTkButton(self, text='Arquivo', command=self.mostrar_botoes_opcao2)
+        self.opcao2.pack(pady=20)
+
+        self.voltar_botao = ctk.CTkButton(self, text='Voltar', command=self.voltar)
+        self.voltar_botao.pack(pady=20)
+        self.voltar_botao.pack_forget()
+
+        self.selecione_pasta = ctk.CTkButton(self, text='Selecione o diretório', command=self.abrir_caminho_pasta)
+        self.selecione_pasta.pack(pady=20)
+        self.selecione_pasta.pack_forget()
+
+        self.iniciar_botao = ctk.CTkButton(self, text='Descriptografar', command=self.comecar_procura)
+        self.iniciar_botao.pack(pady=20)
+        self.iniciar_botao.pack_forget()
+
+        self.selecione_arquivo = ctk.CTkButton(self, text='Selecione o Arquivo', command=self.abrir_caminho_arquivo)
+        self.selecione_arquivo.pack(pady=20)
+        self.selecione_arquivo.pack_forget()
+
+        self.selecione_chave = ctk.CTkButton(self, text='Selecione a Chave', command=self.abrir_caminho_chave)
+        self.selecione_chave.pack(pady=20)
+        self.selecione_chave.pack_forget()
+
+        self.descriptografar_botao = ctk.CTkButton(self, text='Descriptografar', command=self.descriptografar_arquivo)
+        self.descriptografar_botao.pack(pady=20)
+        self.descriptografar_botao.pack_forget()
+
+        self.entry = ctk.CTkEntry(self, placeholder_text="", width=220, justify=tkinter.CENTER)
+        #self.entry.pack(fill=tkinter.BOTH, padx=10, pady=10)
+        self.entry.pack_forget()
+
+        self.entry_chave = ctk.CTkEntry(self, placeholder_text="", width=220, justify=tkinter.CENTER)
+        #self.entry_chave.pack(fill=tkinter.BOTH, padx=10, pady=10)
+        self.entry_chave.pack_forget()
+
+    def mostrar_botoes(self):
+        self.opcao1.pack_forget()
+        self.opcao2.pack_forget()
+
+        self.selecione_pasta.pack(pady=20)
+        self.entry.pack(side='top')
+
+        self.iniciar_botao.pack(pady=20)
+        self.voltar_botao.pack(side='bottom', pady=20)
+        self.geometry('300x475')
+
+    def voltar(self):
+        self.geometry('300x375')
+        self.selecione_pasta.pack_forget()
+        self.iniciar_botao.pack_forget()
+        self.selecione_arquivo.pack_forget()
+        self.selecione_chave.pack_forget()
+        self.voltar_botao.pack_forget()
+        self.descriptografar_botao.pack_forget()
+        self.opcao1.pack(pady=20)
+        self.opcao2.pack(pady=20)
+        self.entry.delete(0, 'end')
+        self.entry.pack_forget()
+        self.entry_chave.pack_forget()
+        if self.label2 is not None:
+            self.label2.destroy()
+        if self.label3 is not None:
+            self.label3.destroy()
+
+    def abrir_caminho_pasta(self):
+        self.caminho_pasta = filedialog.askdirectory()
+        self.entry.delete(0, 'end')  # Limpa o valor atual do CTkEntry
+        self.entry.insert(0, os.path.basename(self.caminho_pasta))  # Insere o nome do diretório no CTkEntry
+
+    def comecar_procura(self):
+        if self.caminho_pasta is not None and os.path.exists(self.caminho_pasta):
+            if self.label is not None:
+                self.label.destroy()
+            self.label = ctk.CTkLabel(self, text="Procurando por dados sensiveis")
+            self.label.pack(pady=22)
+            self.destroy()
+            descriptografar_arquivos_em_diretorio(self.caminho_pasta)
+        else:
+            if self.label2 is not None:
+                self.label2.destroy()
+            self.label2 = ctk.CTkLabel(self, text='Por favor, selecione a pasta Primeiro')
+            self.label2.pack(pady=22)
+
+    def mostrar_botoes_opcao2(self):
+        self.opcao1.pack_forget()
+        self.opcao2.pack_forget()
+
+        self.selecione_arquivo.pack(pady=10)
+        self.entry.pack(side='top')
+
+        self.selecione_chave.pack(pady=10)
+        self.entry_chave.pack(side='top')
+
+        self.descriptografar_botao.pack(pady=40)
+        self.voltar_botao.pack(side='bottom', pady=20)
+        self.geometry('300x570')
+
+    def abrir_caminho_arquivo(self):
+        self.caminho_arquivo = filedialog.askopenfilename()
+        self.entry.delete(0, 'end')
+        self.entry.insert(0, os.path.basename(self.caminho_arquivo))
+
+    def abrir_caminho_chave(self):
+        self.caminho_chave = filedialog.askopenfilename()
+        self.entry_chave.delete(0, 'end')
+        self.entry_chave.insert(0, os.path.basename(self.caminho_chave))
+
+    def descriptografar_arquivo(self):
+        if self.caminho_arquivo and self.caminho_chave:
+            descriptografar_arquivo_por_caminho(self.caminho_arquivo, self.caminho_chave)
+
 if __name__ == "__main__":
-    #diretorio = input(r"Por favor, insira o caminho do diretório: ")
-    janela = customtkinter.CTk()  # janela principal
-    janela.title('CyberShield Finder')  # Nome do titulo 'Ferramenta'
-    janela.geometry('500x280')  # tamanho da janela
-    caminho_pasta = None
-
-def abrir_caminho_pasta():
-    global caminho_pasta, label3
-    root = tk.Tk()
-    root.withdraw()
-    caminho_pasta = filedialog.askdirectory()  # função para abrir o Windows explorer e apenas pasta
-    if label3 is not None:
-        label3.destroy()
-    label3 = customtkinter.CTkLabel(janela, text=f'{caminho_pasta}')
-    label3.pack(pady=22)
-    root.destroy()
-
-#Funcao do botao Procurar
-def comecar_procura():
-    global label, label2
-
-    if caminho_pasta is not None and os.path.exists(caminho_pasta):
-        ## verifica se o caminho_pasta realmente existe se nao existir ele executa o ELSE
-        if label is not None:
-            label.destroy()
-        label = customtkinter.CTkLabel(janela, text="Procurando por dados sensiveis")
-        label.pack(pady=22)  # arrumar para pois se testar 2 vezes ele nao apaga e corrige o outro
-        janela.destroy()
-        descriptografar_arquivos_em_diretorio(caminho_pasta)  # Colocando o varrer_diretorio(caminho_pasta) pela funcao do botao Procurar
-    else:
-        if label2 is not None:
-            label2.destroy()
-        label2 = customtkinter.CTkLabel(janela, text='Por favor, selecione a pasta Primeiro')
-        label2.pack(pady=22)
-
-#Botao Selecione a pasta
-selecione_pasta = customtkinter.CTkButton(janela, text='Selecione a Pasta', command=abrir_caminho_pasta)
-selecione_pasta.pack(pady=20)  # configura o botao
-
-
-#Botao Procurar
-iniciar_botao = customtkinter.CTkButton(janela, text='Descriptografar', command=comecar_procura)
-iniciar_botao.pack(pady=20)  # espacos entre o botao
-
-label = None           #Declara vazio para nao spamar a mensagem
-label2 = None          #Declara vazio para nao spamar a mensagem
-label3 = None          #Declara vazio para nao spamar a mensagem
-
-janela.mainloop()  # mantém a janela sem fechar
+    app = App()
+    app.mainloop()
