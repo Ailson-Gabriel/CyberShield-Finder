@@ -3,6 +3,7 @@ import customtkinter #  Biblioteca para criar interfaces gráficas
 from tkinter import filedialog, messagebox # Módulo que fornece caixas de diálogo para abrir e salvar arquivos
 from PIL import Image # Módulo para abrir, manipular e salvar imagens
 import subprocess # Módulo para criar processos, iniciar programas e comandos
+import tkinter # Módulo que fornece funções para criar interfaces gráficas
 from grava_resultados import inicia_dados # Função que inicializa o dicionário de resultados
 from controller import varrer_diretorio # Função que varre um diretório em busca de arquivos
 from print_textbox import print_to_textbox # Função que imprime mensagens em um Textbox
@@ -28,7 +29,7 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
 
         # Cria um frame para o logo
-        self.logo_image = customtkinter.CTkImage(Image.open("assets\\CyberShieldLOGO.png"), size=(200, 200))
+        self.logo_image = customtkinter.CTkImage(Image.open("assets\\ESCUDO.ico"), size=(200, 200))
 
         # Cria um label para o logo
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, image=self.logo_image, text="Finder" ,compound="top", font=customtkinter.CTkFont(size=30, weight="bold"))
