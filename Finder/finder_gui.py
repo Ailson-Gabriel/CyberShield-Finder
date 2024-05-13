@@ -138,7 +138,8 @@ class App(customtkinter.CTk): # Classe principal da aplicação
         imagem.show() # Mostra a imagem
 
     def criar_dashboard(self): # Método para criar o dashboard
-        subprocess.Popen(["FinderDash.exe"], shell=True) # Abre o dashboard
+        #subprocess.Popen(["FinderDash.exe"], shell=True) # Abre o dashboard
+        subprocess.run(["python", "dash_gui.py"], shell=True) # Abre o DashBoard
 
 if __name__ == "__main__": # Verifica se o script está sendo executado diretamente
     app = App() # Cria uma instância da classe App
