@@ -15,7 +15,7 @@ O CyberShield Finder é uma ferramenta poderosa para varrer seus arquivos e dire
 1. **Instalação:** 
     * **Baixe o repositório:** Clone o repositório do GitHub.
     ```bash
-    git clone https://github.com/seu-usuario/CyberShield-Finder.git
+    git clone https://github.com/Ailson-Gabriel/Challenge-Nuclea.git
     ```
     * **Instale as dependências:** Execute `pip install -r requirements.txt`.
     ```bash
