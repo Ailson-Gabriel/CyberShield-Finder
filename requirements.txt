@@ -1,0 +1,9 @@
+customtkinter
+pypff
+openpyxl
+xlrd
+PyPDF2
+pytesseract
+opencv-python
+cryptography
+matplotlib
