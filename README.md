@@ -39,7 +39,7 @@ O CyberShield Finder é uma ferramenta poderosa para varrer seus arquivos e dire
 
 * **Reconhecimento Facial:** Utiliza o OpenCV para detectar rostos em imagens, adicionando um nível extra de segurança.
 * **Criptografia de Arquivos:** Criptografa os arquivos que contêm dados sensíveis, utilizando a biblioteca `cryptography` para garantir a confidencialidade.
-* **Interface Personalizada:** Você pode personalizar a aparência do aplicativo com modos de cores "Dark", "Light" e "System", além de ajustar a escala da interface.
+* **Interface Personalizada:** Você pode personalizar a aparência do aplicativo com modos de cores "Dark" e "Light", além de ajustar a escala da interface.
 
 ### Próximos Passos:
 
