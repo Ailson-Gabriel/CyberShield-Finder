@@ -18,17 +18,17 @@ A aplicação é estruturada em diversos módulos Python, cada um com uma funç�
 
 •	processar_*.py: Módulos responsáveis por processar os diferentes tipos de arquivos:
 
-o	processar_imagem.py: Processa imagens usando OCR (Optical Character Recognition).
+   o	processar_imagem.py: Processa imagens usando OCR (Optical Character Recognition).
 
-o	processar_texto.py: Processa arquivos de texto.
+   o	processar_texto.py: Processa arquivos de texto.
 
-o	processar_docx.py: Processa arquivos DOCX.
+   o	processar_docx.py: Processa arquivos DOCX.
 
-o	processar_pdf.py: Processa arquivos PDF.
+   o	processar_pdf.py: Processa arquivos PDF.
 
-o	processar_excel.py: Processa arquivos Excel.
+   o	processar_excel.py: Processa arquivos Excel.
 
-o	processar_pst.py: Processa arquivos PST.
+   o	processar_pst.py: Processa arquivos PST.
     
 •	varredura.py: Realiza a análise do texto extraído dos arquivos, buscando dados sensíveis e utilizando reconhecimento facial para imagens.
 
